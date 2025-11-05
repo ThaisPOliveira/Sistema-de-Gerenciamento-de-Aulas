@@ -8,25 +8,34 @@
     <title>Login</title>
 </head>
 <body>
-    
-    
+
 <%
     String email = request.getParameter("email");
     String senha = request.getParameter("senha");
 
     try {
         UserDAO userDAO = new UserDAO();
-        boolean autenticado = userDAO.autenticar(email, senha); 
+        User user = userDAO.autenticar(email, senha); 
+        if (user != null) {
+        
+            session.setAttribute("usuarioLogado", user.getNome());
+            session.setAttribute("tipoUsuario", user.getTipo());
 
-        if (autenticado) {
+            if ("admin".equalsIgnoreCase(user.getTipo())) {
 %>
-    <script>
-        alert("Login realizado com sucesso!");
-        window.location.href="../home.html";
-        
-        
-    </script>
+                <script>
+              
+                    window.location.href="../home_admin.html";
+                </script>
 <%
+            } else {
+%>
+                <script>
+                    
+                    window.location.href="../home_professor.html";
+                </script>
+<%
+            }
         } else {
 %>
     <script>
@@ -36,14 +45,12 @@
 <%
         }
     } catch (Exception e) {
-        e.printStackTrace(); 
+        e.printStackTrace();
 %>
-    
+    <p>Erro ao processar o login: <%= e.getMessage() %></p>
 <%
     }
-%> 
-    
- 
+%>
 
 </body>
 </html>

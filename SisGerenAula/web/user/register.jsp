@@ -35,7 +35,7 @@
 %>
     <script>
         alert("Cadastrado realizado com sucesso!");
-        window.location.href = "../home.html"; // CAMINHO CORRIGIDO
+        window.location.href = "../home.html"; 
     </script>
 <%
         } else {
