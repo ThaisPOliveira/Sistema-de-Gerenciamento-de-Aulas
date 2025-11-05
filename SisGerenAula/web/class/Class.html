@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+
+<html>
+<head>
+    <title>Cadastro de Turma</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Cadastro de Turma</h1>
+
+    <form method="post" action="Class.jsp">
+        <label>Nome da Turma:</label>
+        <input type="text" name="nomeTurma" required><br><br>
+
+        <label>Professor:</label>
+        <input type="text" name="nomeProfessor" required><br><br>
+        
+        <label>Alunos</label>
+        <input type="text" name="nomeAlunos" required><br><br>
+
+        <label>Horário:</label>
+        <input type="time" name="horario" required><br><br>
+        
+        <label>Disciplina:</label>
+        <input type="text" name="idDisciplina" required><br><br>
+
+        <button type="submit">Cadastrar</button>
+        <button type="reset">Limpar</button>
+    </form>
+    <br></br>
+    <a href="../home.html">Voltar</a>
+</body>
+</html>
+
