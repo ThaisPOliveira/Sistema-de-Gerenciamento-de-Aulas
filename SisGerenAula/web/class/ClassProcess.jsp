@@ -23,16 +23,16 @@
         turma.setNomeTurma(request.getParameter("nomeTurma"));
         turma.setNomeProfessor(request.getParameter("nomeProfessor")); 
         
-        // Alunos — agora pega múltiplos, se houver
+      
         String[] alunosSelecionados = request.getParameterValues("alunosSelecionados");
-        // ainda mantém compatibilidade com o campo antigo (nomeAlunos)
+      
         if (alunosSelecionados != null) {
-            turma.setNomeAlunos(String.join(",", alunosSelecionados)); // salva como "1,2,3"
+            turma.setNomeAlunos(String.join(",", alunosSelecionados)); 
         } else {
             turma.setNomeAlunos(request.getParameter("nomeAlunos"));
         }
 
-        // Disciplina e horário
+     
         String idDisciplinaStr = request.getParameter("idDisciplina");
         turma.setIdDisciplina(Integer.parseInt(idDisciplinaStr)); 
 
@@ -40,7 +40,7 @@
         turma.setHorario(LocalTime.parse(horarioStr));
 
         ClassDAO turmaDAO = new ClassDAO();
-       boolean sucesso = turmaDAO.cadastrar(turma);//erro em cadastrar
+       boolean sucesso = turmaDAO.cadastrar(turma);
 
         if (sucesso) {
 %>
