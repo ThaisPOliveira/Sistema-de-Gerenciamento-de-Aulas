@@ -15,9 +15,9 @@ public class ClassDAO {
 
             stmt.setString(1, turma.getNomeTurma());
             stmt.setString(2, turma.getNomeProfessor());
-            stmt.setString(3, turma.getNomeAlunos()); // IDs separados por vírgula, ex: "1,2,3"
+            stmt.setString(3, turma.getNomeAlunos());
             stmt.setInt(4, turma.getIdDisciplina());
-            stmt.setTime(5, java.sql.Time.valueOf(turma.getHorario())); // converte LocalTime para SQL
+            stmt.setTime(5, java.sql.Time.valueOf(turma.getHorario())); 
 
             int linhas = stmt.executeUpdate();
             return linhas > 0;
