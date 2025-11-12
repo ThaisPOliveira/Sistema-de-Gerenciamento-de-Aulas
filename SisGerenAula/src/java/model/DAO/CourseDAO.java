@@ -1,4 +1,3 @@
-
 package model.DAO;
 
 import java.sql.Connection;
@@ -8,15 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Course;
-import config.ConectaDB; 
+import config.ConectaDB;
 
 public class CourseDAO {
 
     public boolean cadastrar(Course disciplina) throws ClassNotFoundException {
         String sql = "INSERT INTO disciplina (nome, descricao) VALUES (?, ?)";
 
-        try (Connection conn = ConectaDB.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, disciplina.getNome());
             stmt.setString(2, disciplina.getDescricao());
@@ -35,9 +33,7 @@ public class CourseDAO {
         List<Course> disciplinas = new ArrayList<>();
         String sql = "SELECT id, nome, descricao FROM disciplina ORDER BY nome";
 
-        try (Connection conn = ConectaDB.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Course disciplina = new Course();

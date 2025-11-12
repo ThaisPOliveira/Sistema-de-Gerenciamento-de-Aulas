@@ -9,6 +9,7 @@ package model;
  * @author Happy
  */
 public class Professor {
+
     private int id;
     private String nome;
     private String email;
@@ -36,7 +37,5 @@ public class Professor {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
-    
+
 }

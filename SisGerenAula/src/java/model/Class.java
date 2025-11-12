@@ -1,19 +1,19 @@
 package model;
 
 import java.time.LocalTime;
-/**
- *
- * @author Thais Oliveira
- */
-public class Class{
+import java.util.List;
+
+public class Class {
     private int id;
     private String nomeTurma;
     private String nomeProfessor;
     private String nomeAlunos;
     private LocalTime horario;
     private int idDisciplina;
-    
-    //GET
+    private String nomeDisciplina;
+    private List<Integer> idsAlunos; 
+
+
     public int getId() {
         return this.id;
     }
@@ -37,8 +37,14 @@ public class Class{
     public int getIdDisciplina() {
         return this.idDisciplina;
     }
-    
-    //SET
+
+    public String getNomeDisciplina() {
+        return this.nomeDisciplina;
+    }
+
+    public List<Integer> getIdsAlunos() {
+        return this.idsAlunos;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -60,11 +66,20 @@ public class Class{
         this.horario = horario;
     }
 
+   
+    public void setHorario(String horario) {
+        this.horario = LocalTime.parse(horario);
+    }
+
     public void setIdDisciplina(int idDisciplina) {
         this.idDisciplina = idDisciplina;
     }
-    
-    
-    
 
+    public void setNomeDisciplina(String nomeDisciplina) {
+        this.nomeDisciplina = nomeDisciplina;
+    }
+
+    public void setIdsAlunos(List<Integer> idsAlunos) {
+        this.idsAlunos = idsAlunos;
+    }
 }

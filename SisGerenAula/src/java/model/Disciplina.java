@@ -6,16 +6,16 @@ package model;
 
 /**
  *
- * @author Happy
+ * @author Matheus e Thais
  */
 public class Disciplina {
-     private int id;
+
+    private int id;
     private String nome;
     private String descricao;
 
-   
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -23,7 +23,7 @@ public class Disciplina {
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public void setNome(String nome) {
@@ -31,7 +31,7 @@ public class Disciplina {
     }
 
     public String getDescricao() {
-        return descricao;
+        return this.descricao;
     }
 
     public void setDescricao(String descricao) {

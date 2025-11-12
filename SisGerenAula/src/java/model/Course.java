@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @author Thais Oliveira
+ * @author Thais Oliveira e Matheus
  */
 public class Course {
     private int id;

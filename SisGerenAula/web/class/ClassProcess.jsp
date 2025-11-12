@@ -1,3 +1,8 @@
+<%-- 
+    Document   : ClassForm
+    Created on : 5 de nov. de 2025, 12:17:50
+    Author     : Matheus e Thais
+--%>
 <%@page import="java.time.format.DateTimeParseException"%>
 <%@page import="java.time.LocalTime"%>
 <%@page import="model.Class"%> 
@@ -17,19 +22,31 @@
         
         turma.setNomeTurma(request.getParameter("nomeTurma"));
         turma.setNomeProfessor(request.getParameter("nomeProfessor")); 
-        turma.setNomeAlunos(request.getParameter("nomeAlunos")); 
+        
+        // Alunos — agora pega múltiplos, se houver
+        String[] alunosSelecionados = request.getParameterValues("alunosSelecionados");
+        // ainda mantém compatibilidade com o campo antigo (nomeAlunos)
+        if (alunosSelecionados != null) {
+            turma.setNomeAlunos(String.join(",", alunosSelecionados)); // salva como "1,2,3"
+        } else {
+            turma.setNomeAlunos(request.getParameter("nomeAlunos"));
+        }
+
+        // Disciplina e horário
         String idDisciplinaStr = request.getParameter("idDisciplina");
         turma.setIdDisciplina(Integer.parseInt(idDisciplinaStr)); 
+
         String horarioStr = request.getParameter("horario");
         turma.setHorario(LocalTime.parse(horarioStr));
 
         ClassDAO turmaDAO = new ClassDAO();
-        boolean sucesso = turmaDAO.cadastrar(turma);
+       boolean sucesso = turmaDAO.cadastrar(turma);//erro em cadastrar
+
         if (sucesso) {
 %>
     <script>
         alert("Turma cadastrada com sucesso!");
-        window.location.href = "../home.html"; 
+        window.location.href = "../home_admin.html"; 
     </script>
 <%
         } else {
@@ -62,3 +79,4 @@
 
 </body>
 </html>
+

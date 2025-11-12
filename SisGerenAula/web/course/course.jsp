@@ -23,7 +23,7 @@
 %>
     <script>
         alert("Disciplina cadastrada com sucesso!");
-        window.location.href = "inicial.html";
+        window.location.href = "home_admin.html";
         
     </script>
 <%
