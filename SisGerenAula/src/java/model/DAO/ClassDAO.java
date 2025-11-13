@@ -72,6 +72,43 @@ public class ClassDAO {
 
         return lista;
     }
+    
+    
+      public boolean atualizarTurma(Class turma) throws ClassNotFoundException {
+        String sql = "UPDATE turma SET nome_turma=?, nome_professor=?, nome_aluno=?, id_disciplina=?, horario=? WHERE id_turma=?";
+
+        try (Connection conn = ConectaDB.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, turma.getNomeTurma());
+            stmt.setString(2, turma.getNomeProfessor());
+            stmt.setString(3, turma.getNomeAlunos());
+            stmt.setInt(4, turma.getIdDisciplina());
+            stmt.setTime(5, java.sql.Time.valueOf(turma.getHorario()));
+            stmt.setInt(6, turma.getId());
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean excluirTurma(int id) throws ClassNotFoundException {
+        String sql = "DELETE FROM turma WHERE id_turma = ?";
+
+        try (Connection conn = ConectaDB.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     private String buscarNomesPorIds(String ids, Connection conn) {
         StringBuilder nomes = new StringBuilder();
