@@ -31,18 +31,8 @@ public class ClassDAO {
     public List<Class> listarTurmas() throws ClassNotFoundException {
         List<Class> lista = new ArrayList<>();
 
-        String sql = """
-            SELECT 
-                t.id_turma,
-                t.nome_turma,
-                t.nome_professor,
-                t.nome_aluno,
-                t.horario,
-                d.nome AS nome_disciplina
-            FROM turma t
-            LEFT JOIN disciplina d ON t.id_disciplina = d.id
-            ORDER BY t.nome_turma;
-        """;
+       String sql = "SELECT t.id_turma, t.nome_turma, t.nome_professor, t.ids_alunos, t.horario, d.nome AS nome_disciplina FROM turma t LEFT JOIN disciplina d ON t.id_disciplina = d.id ORDER BY t.nome_turma;";
+
 
         try (Connection conn = ConectaDB.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -57,7 +47,7 @@ public class ClassDAO {
                 turma.setNomeDisciplina(rs.getString("nome_disciplina"));
 
                 String idsAlunos = rs.getString("nome_aluno");
-                if (idsAlunos != null && !idsAlunos.isBlank()) {
+                if (idsAlunos != null && !idsAlunos.isEmpty()) {
                     turma.setNomeAlunos(buscarNomesPorIds(idsAlunos, conn));
                 } else {
                     turma.setNomeAlunos("Nenhum aluno cadastrado");
