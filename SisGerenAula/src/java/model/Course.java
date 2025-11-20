@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package model;
 
 /**
@@ -12,9 +9,11 @@ public class Course {
     private int id;
     private String nome;
     private String descricao;
-    
-    //GET
+    private int carga_horaria;
+    private String nivel;
+    private boolean ativa;   
 
+    // GET
     public int getId() {
         return this.id;
     }
@@ -26,9 +25,20 @@ public class Course {
     public String getDescricao() {
         return this.descricao;
     }
-    
-    //SET
 
+    public int getCarga_horaria() {
+        return carga_horaria;
+    }
+
+    public String getNivel() {
+        return nivel;
+    }
+
+    public boolean isAtiva() {
+        return ativa;
+    }
+
+    // SET
     public void setId(int id) {
         this.id = id;
     }
@@ -40,7 +50,16 @@ public class Course {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
-    
-    
+
+    public void setCarga_horaria(int carga_horaria) {
+        this.carga_horaria = carga_horaria;
+    }
+
+    public void setNivel(String nivel) {
+        this.nivel = nivel;
+    }
+
+    public void setAtiva(boolean ativa) {
+        this.ativa = ativa;
+    }
 }

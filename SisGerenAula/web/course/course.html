@@ -7,17 +7,35 @@
 <body>
     <h1>Cadastro de Nova Disciplina</h1>
 
-    <form method="post" action="course.jsp"> 
-        <label>Nome da Disciplina:</label>
+    <form method="post" action="course.jsp">
+
+        <label>Nome da Disciplina:</label><br>
         <input type="text" name="nome" required><br><br>
 
         <label>Descrição:</label><br>
-        <textarea name="descricao" rows="5" cols="40" required></textarea><br><br>
+        <textarea name="descricao" rows="4" cols="40" required></textarea><br><br>
+        
+        <label>Carga Horária (horas):</label><br>
+        <input type="number" name="carga_horaria" required><br><br>
+        
+        <label>Nivel:</label><br>
+        <select name="nivel" required>
+            <option value="Basico">Básico</option>
+            <option value="Intermediario">Intermediário</option>
+            <option value="Avancado">Avançado</option>
+        </select><br><br>
+
+        <label>Ativa:</label><br>
+        <select name="ativa" required>
+            <option value="true">Sim</option>
+            <option value="false">Não</option>
+        </select><br><br>
 
         <button type="submit">Cadastrar Disciplina</button>
         <button type="reset">Limpar</button>
     </form>
-    <br></br>
+
+    <br>
 
     <a href="../home_admin.html">Voltar</a>
 </body>
