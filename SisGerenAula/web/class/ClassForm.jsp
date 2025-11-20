@@ -6,6 +6,8 @@
 
 <%@page import="java.util.List"%>
 <%@page import="model.User"%>
+<%@page import="model.Professor"%>
+
 <%@page import="model.DAO.ProfessorDAO"%>
 <%@page import="model.Disciplina"%>
 <%@page import="model.DAO.DisciplinaDAO"%>
@@ -38,8 +40,9 @@
                 <option value="">Selecione um professor</option>
                 <%
                     ProfessorDAO pdao = new ProfessorDAO();
-                    List<User> professores = pdao.ListarProfessores();
-                    for (User prof : professores) {
+                   List<Professor> professores = pdao.listar();
+                   for (Professor prof : professores) {
+
                 %>
                 <option value="<%= prof.getNome()%>"><%= prof.getNome()%></option>
                 <%
