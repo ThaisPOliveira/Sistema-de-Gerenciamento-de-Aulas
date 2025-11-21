@@ -12,15 +12,15 @@
             boolean sucesso = dao.excluir(Integer.parseInt(idParam));
             
             if (sucesso) {
-                response.sendRedirect("delete_course.jsp?sucesso=excluido");
+                response.sendRedirect("list_course.jsp?sucesso=excluido");
             } else {
-                response.sendRedirect("delete_course.jsp?erro=excluir");
+                response.sendRedirect("list_course.jsp?erro=excluir");
             }
             
         } catch (NumberFormatException e) {
-            response.sendRedirect("delete_course.jsp?erro=id_invalido");
+            response.sendRedirect("list_course.jsp?erro=id_invalido");
         }
     } else {
-        response.sendRedirect("delete_course.jsp");
+        response.sendRedirect("list_course.jsp");
     }
 %>

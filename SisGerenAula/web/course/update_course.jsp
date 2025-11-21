@@ -4,10 +4,8 @@
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
     
-    // ========== PARTE 1: PROCESSAR ATUALIZAÇÃO (POST) ==========
     if ("POST".equalsIgnoreCase(request.getMethod())) {
         try {
-            System.out.println("=== PROCESSANDO ATUALIZAÇÃO ===");
             
             Course disciplina = new Course();
             disciplina.setId(Integer.parseInt(request.getParameter("id")));
@@ -34,7 +32,6 @@
         }
     }
     
-    // ========== PARTE 2: MOSTRAR FORMULÁRIO (GET) ==========
     String idParam = request.getParameter("id");
     Course disciplina = null;
     
@@ -43,7 +40,6 @@
             CourseDAO dao = new CourseDAO();
             disciplina = dao.buscarPorId(Integer.parseInt(idParam));
         } catch (NumberFormatException e) {
-            // ID inválido
         }
     }
     
@@ -52,7 +48,6 @@
         return;
     }
     
-    // Verificar se veio de uma atualização bem-sucedida
     String sucesso = request.getParameter("sucesso");
 %>
 <!DOCTYPE html>
@@ -166,7 +161,7 @@
 </head>
 <body>
     <div class="card">
-        <h1 class="titulo">✏️ Editar Disciplina</h1>
+        <h1 class="titulo">Editar Disciplina</h1>
         
         <form method="post" action="update_course.jsp">
             <input type="hidden" name="id" value="<%= disciplina.getId() %>">
@@ -194,8 +189,8 @@
             </select>
             
             <div class="btn-group">
-                <button type="submit" class="btn btn-salvar">💾 Salvar Alterações</button>
-                <a href="list_course.jsp" class="btn btn-cancelar">❌ Cancelar</a>
+                <button type="submit" class="btn btn-salvar">Salvar Alterações</button>
+                <a href="list_course.jsp" class="btn btn-cancelar"> Cancelar</a>
             </div>
         </form>
     </div>

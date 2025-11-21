@@ -41,7 +41,7 @@ public class CourseDAO {
     public List<Course> listarTodos() throws ClassNotFoundException {
 
         List<Course> disciplinas = new ArrayList<>();
-        String sql = "SELECT * FROM disciplina ORDER BY nome";
+        String sql = "SELECT * FROM disciplina WHERE ativa = true ORDER BY nome";
 
         try (Connection conn = ConectaDB.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -124,19 +124,19 @@ public class CourseDAO {
    }
     
     public boolean excluir(int id) throws ClassNotFoundException {
+       // Exclusão lógica - marcar como inativa
+       String sql = "UPDATE disciplina SET ativa = false WHERE id = ?";
 
-        String sql = "DELETE FROM disciplina WHERE id = ?";
+       try (Connection conn = ConectaDB.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        try (Connection conn = ConectaDB.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+           stmt.setInt(1, id);
+           stmt.executeUpdate();
+           return true;
 
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-            return true;
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
+       } catch (SQLException ex) {
+           ex.printStackTrace();
+           return false;
+       }
+   }
 }
