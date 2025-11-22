@@ -11,9 +11,7 @@ import config.ConectaDB;
 
 public class CourseDAO {
 
-    // -------------------------
-    // CREATE (CADASTRAR)
-    // -------------------------
+  
     public boolean cadastrar(Course disciplina) throws ClassNotFoundException {
     String sql = "INSERT INTO disciplina (nome, descricao, carga_horaria, nivel, ativa) "
                + "VALUES (?, ?, ?, ?, ?)";
@@ -37,11 +35,9 @@ public class CourseDAO {
     }
 }
 
-   
-    public List<Course> listarTodos() throws ClassNotFoundException {
-
+    public List<Course> listarTodas() throws ClassNotFoundException {
         List<Course> disciplinas = new ArrayList<>();
-        String sql = "SELECT * FROM disciplina WHERE ativa = true ORDER BY nome";
+        String sql = "SELECT * FROM disciplina ORDER BY nome";
 
         try (Connection conn = ConectaDB.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -49,14 +45,12 @@ public class CourseDAO {
 
             while (rs.next()) {
                 Course d = new Course();
-
                 d.setId(rs.getInt("id"));
                 d.setNome(rs.getString("nome"));
                 d.setDescricao(rs.getString("descricao"));
                 d.setCarga_horaria(rs.getInt("carga_horaria"));
                 d.setNivel(rs.getString("nivel"));
                 d.setAtiva(rs.getBoolean("ativa"));
-
                 disciplinas.add(d);
             }
 
@@ -67,9 +61,34 @@ public class CourseDAO {
         return disciplinas;
     }
 
- 
-    public Course buscarPorId(int id) throws ClassNotFoundException {
+    public List<Course> listarAtivas() throws ClassNotFoundException {
+        List<Course> disciplinas = new ArrayList<>();
+        String sql = "SELECT * FROM disciplina WHERE ativa = true ORDER BY nome";
 
+        try (Connection conn = ConectaDB.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Course d = new Course();
+                d.setId(rs.getInt("id"));
+                d.setNome(rs.getString("nome"));
+                d.setDescricao(rs.getString("descricao"));
+                d.setCarga_horaria(rs.getInt("carga_horaria"));
+                d.setNivel(rs.getString("nivel"));
+                d.setAtiva(rs.getBoolean("ativa"));
+                disciplinas.add(d);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return disciplinas;
+    }
+
+    
+    public Course buscarPorId(int id) throws ClassNotFoundException {
         String sql = "SELECT * FROM disciplina WHERE id = ?";
         Course d = null;
 
@@ -97,7 +116,6 @@ public class CourseDAO {
         return d;
     }
 
- 
     public boolean atualizar(Course disciplina) throws ClassNotFoundException {
      String sql = "UPDATE disciplina SET nome=?, descricao=?, carga_horaria=?, nivel=?, ativa=? "
                 + "WHERE id=?";
@@ -139,4 +157,22 @@ public class CourseDAO {
            return false;
        }
    }
+    public boolean reativar(int id) throws ClassNotFoundException {
+        String sql = "UPDATE disciplina SET ativa = true WHERE id = ?";
+
+        try (Connection conn = ConectaDB.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            int linhasAfetadas = stmt.executeUpdate();
+            System.out.println("Disciplina reativada - Linhas afetadas: " + linhasAfetadas);
+            return linhasAfetadas > 0;
+
+        } catch (SQLException ex) {
+            System.out.println("ERRO ao reativar: " + ex.getMessage());
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
 }
