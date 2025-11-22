@@ -170,7 +170,6 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Nome da Turma</th>
                         <th>Professor</th>
                         <th>Disciplina</th>
@@ -188,7 +187,7 @@
                             for (Class turma : turmas) {
                     %>
                     <tr>
-                        <td><%= turma.getId() %></td>
+                        
                         <td>
                             <strong><%= turma.getNomeTurma() %></strong>
                         </td>
@@ -207,8 +206,8 @@
                             </div>
                         </td>
                         <td class="actions">
-                            <a href="ClassEdit.jsp?id=<%= turma.getId() %>" class="btn btn-editar">Editar</a>
-                            <a href="ClassDelete.jsp?id=<%= turma.getId() %>" 
+                            <a href="edit_class.jsp?id=<%= turma.getId() %>" class="btn btn-editar">Editar</a>
+                            <a href="delete_class.jsp?id=<%= turma.getId() %>" 
                                class="btn btn-excluir"
                                onclick="return confirm('Tem certeza que deseja excluir esta turma?')">
                                 Excluir

@@ -1,20 +1,55 @@
 <%@page import="java.util.List"%>
+<%@page import="model.Class"%>
+<%@page import="model.DAO.ClassDAO"%>
 <%@page import="model.Professor"%>
 <%@page import="model.DAO.ProfessorDAO"%>
-<%@page import="model.Disciplina"%>
-<%@page import="model.DAO.DisciplinaDAO"%>
+<%@page import="model.Course"%>
+<%@page import="model.DAO.CourseDAO"%>
 <%@page import="model.Aluno"%>
 <%@page import="model.DAO.AlunoDAO"%>
-<%@page import="model.DAO.CourseDAO"%>
-
-<%@page import="model.Course"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String idParam = request.getParameter("id");
+    Class turma = null;
+    List<Integer> alunosSelecionados = new ArrayList<>();
+    
+    if (idParam != null && !idParam.isEmpty()) {
+        try {
+            int id = Integer.parseInt(idParam);
+            ClassDAO dao = new ClassDAO();
+            turma = dao.buscarPorId(id);
+            
+            if (turma != null && turma.getNomeAlunos() != null && !turma.getNomeAlunos().isEmpty()) {
+                // Se getNomeAlunos() retorna os IDs como string (ex: "1,2,3")
+                String[] idsArray = turma.getNomeAlunos().split(",");
+                for (String idAluno : idsArray) {
+                    if (!idAluno.trim().isEmpty()) {
+                        try {
+                            alunosSelecionados.add(Integer.parseInt(idAluno.trim()));
+                        } catch (NumberFormatException e) {
+                            // Se for nomes em vez de IDs, ignora
+                        }
+                    }
+                }
+            }
+        } catch (NumberFormatException e) {
+            response.sendRedirect("ClassList.jsp?erro=ID inválido");
+            return;
+        }
+    }
+    
+    if (turma == null) {
+        response.sendRedirect("ClassList.jsp?erro=Turma não encontrada");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cadastro de Turma</title>
+        <title>Editar Turma</title>
         
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -44,6 +79,20 @@
                 border-bottom: 2px solid #007BFF;
                 padding-bottom: 15px;
                 font-size: 24px;
+            }
+            
+            .alert {
+                padding: 12px 15px;
+                margin-bottom: 20px;
+                border-radius: 5px;
+                text-align: center;
+                font-weight: bold;
+            }
+            
+            .alert-error {
+                color: #721c24;
+                background-color: #f8d7da;
+                border: 1px solid #f5c6cb;
             }
             
             .form-group {
@@ -168,13 +217,21 @@
     </head>
     <body>
         <div class="container">
-            <h1 class="titulo">Cadastro de Turma</h1>
+            <h1 class="titulo">Editar Turma</h1>
 
-            <form method="post" action="ClassProcess.jsp">
+            <% if (request.getParameter("erro") != null) { %>
+                <div class="alert alert-error">
+                    ❌ <%= request.getParameter("erro") %>
+                </div>
+            <% } %>
+
+            <form method="post" action="update_class.jsp">
+                <input type="hidden" name="id_turma" value="<%= turma.getId() %>">
+                
                 <!-- Nome da turma -->
                 <div class="form-group">
                     <label class="campo-obrigatorio">Nome da Turma:</label>
-                    <input type="text" name="nomeTurma" required placeholder="Ex: Turma A - Matemática">
+                    <input type="text" name="nomeTurma" value="<%= turma.getNomeTurma() %>" required placeholder="Ex: Turma A - Matemática">
                 </div>
 
                 <!-- Professor -->
@@ -187,7 +244,9 @@
                             List<Professor> professores = pdao.listarTodos();
                             for (Professor prof : professores) {
                         %>
-                        <option value="<%= prof.getNome()%>"><%= prof.getNome()%></option>
+                        <option value="<%= prof.getNome()%>" <%= prof.getNome().equals(turma.getNomeProfessor()) ? "selected" : "" %>>
+                            <%= prof.getNome()%>
+                        </option>
                         <%
                             }
                         %>
@@ -203,7 +262,9 @@
                             List<Aluno> alunos = adao.listarAlunos();
                             for (Aluno a : alunos) {
                         %>
-                        <option value="<%= a.getId()%>"><%= a.getNome()%></option>
+                        <option value="<%= a.getId()%>" <%= alunosSelecionados.contains(a.getId()) ? "selected" : "" %>>
+                            <%= a.getNome()%>
+                        </option>
                         <%
                             }
                         %>
@@ -214,7 +275,7 @@
                 <!-- Horario -->
                 <div class="form-group">
                     <label class="campo-obrigatorio">Horário:</label>
-                    <input type="time" name="horario" required>
+                    <input type="time" name="horario" value="<%= turma.getHorario() != null ? turma.getHorario().toString() : "" %>" required>
                 </div>
 
                 <!-- Disciplina -->
@@ -227,7 +288,7 @@
                             List<Course> disciplinas = cdao.listarTodas();
                             for (Course d : disciplinas) {
                         %>
-                        <option value="<%= d.getId()%>" title="<%= d.getDescricao()%>">
+                        <option value="<%= d.getId()%>" <%= d.getId() == turma.getIdDisciplina() ? "selected" : "" %>>
                             <%= d.getNome()%> - <%= d.getNivel()%>
                         </option>
                         <%
@@ -237,13 +298,13 @@
                 </div>
 
                 <div class="btn-group">
-                    <button type="submit" class="btn btn-primary">🏫 Cadastrar Turma</button>
-                    <button type="reset" class="btn btn-secondary">🗑️ Limpar</button>
+                    <button type="submit" class="btn btn-primary">💾 Atualizar Turma</button>
+                    <a href="ClassList.jsp" class="btn btn-secondary">❌ Cancelar</a>
                 </div>
             </form>
 
             <div style="text-align: center; margin-top: 20px;">
-                <a href="../home_admin.html" class="btn-voltar">← Voltar para Home</a>
+                <a href="ClassList.jsp" class="btn-voltar">← Voltar para Lista</a>
             </div>
         </div>
 
@@ -260,14 +321,18 @@
                     }
                 });
                 
-                $('#alunosSelect').on('change', function() {
-                    const selected = $(this).val();
+                function atualizarContadorAlunos() {
+                    const selected = $('#alunosSelect').val();
                     $('.alunos-selecionados').remove();
                     
                     if (selected && selected.length > 0) {
-                        $(this).after('<div class="alunos-selecionados">🎓 ' + selected.length + ' aluno(s) selecionado(s)</div>');
+                        $('#alunosSelect').after('<div class="alunos-selecionados">🎓 ' + selected.length + ' aluno(s) selecionado(s)</div>');
                     }
-                });
+                }
+                
+                atualizarContadorAlunos();
+                
+                $('#alunosSelect').on('change', atualizarContadorAlunos);
             });
         </script>
     </body>
