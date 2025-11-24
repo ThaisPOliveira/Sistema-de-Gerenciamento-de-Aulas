@@ -8,7 +8,11 @@
             <web-module-libraries>
                 <library dirs="200">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     <file>${libs.socorro.classpath}</file>
+=======
+                    <file>${libs.mysql-connector-j-9.4.0.classpath}</file>
+>>>>>>> Stashed changes
 =======
                     <file>${libs.mysql-connector-j-9.4.0.classpath}</file>
 >>>>>>> Stashed changes

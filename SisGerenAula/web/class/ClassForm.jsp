@@ -1,10 +1,13 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 <%-- 
     Document   : ClassForm
     Created on : 5 de nov. de 2025, 12:16:23
     Author     : Happy
 --%>
 =======
+=======
+>>>>>>> Stashed changes
 <%
 
 String usuarioLogado = (String) session.getAttribute("usuarioLogado");
@@ -19,6 +22,9 @@ if (!"admin".equals(tipoUsuario)) {
     return;
 }
 %>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 <%@page import="java.util.List"%>
