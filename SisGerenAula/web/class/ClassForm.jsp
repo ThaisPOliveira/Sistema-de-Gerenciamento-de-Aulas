@@ -1,8 +1,25 @@
+<<<<<<< Updated upstream
 <%-- 
     Document   : ClassForm
     Created on : 5 de nov. de 2025, 12:16:23
     Author     : Happy
 --%>
+=======
+<%
+
+String usuarioLogado = (String) session.getAttribute("usuarioLogado");
+String tipoUsuario = (String) session.getAttribute("tipoUsuario");
+%>
+
+<%@include file="../WEB-INF/checkAuth.jsp"%>
+<%
+// Verificar se é admin
+if (!"admin".equals(tipoUsuario)) {
+    response.sendRedirect("../user/home_professor.html");
+    return;
+}
+%>
+>>>>>>> Stashed changes
 
 <%@page import="java.util.List"%>
 <%@page import="model.User"%>

@@ -22,32 +22,27 @@
             session.setAttribute("tipoUsuario", user.getTipo());
 
             if ("admin".equalsIgnoreCase(user.getTipo())) {
-%>
-                <script>
-              
-                    window.location.href="../home_admin.html";
-                </script>
-<%
+                response.sendRedirect("../home_admin.html");
+                return;
             } else {
-%>
-                <script>
-                    
-                    window.location.href="../home_professor.html";
-                </script>
-<%
+                response.sendRedirect("../home_professor.html");
+                return;
             }
         } else {
 %>
     <script>
         alert("Usuário não encontrado ou senha incorreta!");
-        window.location.href="../cadastro/login.html";
+        window.location.href="login.html";
     </script>
 <%
         }
     } catch (Exception e) {
         e.printStackTrace();
 %>
-    <p>Erro ao processar o login: <%= e.getMessage() %></p>
+    <script>
+        alert("Erro ao processar o login!");
+        window.location.href="login.html";
+    </script>
 <%
     }
 %>
