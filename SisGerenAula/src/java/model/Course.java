@@ -1,4 +1,3 @@
-
 package model;
 
 /**
@@ -6,14 +5,24 @@ package model;
  * @author Thais Oliveira e Matheus
  */
 public class Course {
+
     private int id;
     private String nome;
     private String descricao;
     private int carga_horaria;
     private String nivel;
-    private boolean ativa;   
+    private boolean ativa;
+    private String documento;
 
     // GET
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+
     public int getId() {
         return this.id;
     }

@@ -44,30 +44,21 @@
         input[type="text"],
         input[type="number"],
         textarea,
-        select {
+        select,
+        input[type="file"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 14px;
             box-sizing: border-box;
-            transition: border-color 0.3s;
-        }
-        
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: #007BFF;
-            box-shadow: 0 0 5px rgba(0,123,255,0.3);
         }
         
         textarea {
             resize: vertical;
             min-height: 100px;
         }
-        
+
         .btn-group {
             display: flex;
             gap: 10px;
@@ -82,8 +73,6 @@
             font-size: 14px;
             font-weight: bold;
             transition: all 0.3s;
-            text-decoration: none;
-            text-align: center;
             flex: 1;
         }
         
@@ -92,22 +81,11 @@
             color: white;
         }
         
-        .btn-primary:hover {
-            background: #0056b3;
-            transform: translateY(-2px);
-            box-shadow: 0 3px 8px rgba(0,123,255,0.3);
-        }
-        
         .btn-secondary {
             background: #6c757d;
             color: white;
         }
-        
-        .btn-secondary:hover {
-            background: #545b62;
-            transform: translateY(-2px);
-        }
-        
+
         .btn-voltar {
             display: inline-block;
             padding: 10px 20px;
@@ -115,25 +93,11 @@
             color: white;
             text-decoration: none;
             border-radius: 5px;
-            margin-top: 15px;
-            transition: all 0.3s;
         }
-        
-        .btn-voltar:hover {
-            background: #218838;
-            text-decoration: none;
-            transform: translateY(-1px);
-        }
-        
+
         .campo-obrigatorio::after {
             content: " *";
             color: red;
-        }
-        
-        .info-text {
-            font-size: 12px;
-            color: #6c757d;
-            margin-top: 5px;
         }
     </style>
 </head>
@@ -141,31 +105,36 @@
     <div class="container">
         <h1 class="titulo">Cadastro de Nova Disciplina</h1>
 
-        <form method="post" action="course.jsp">
+        <form method="post" action="course.jsp" enctype="multipart/form-data">
+            
             <div class="form-group">
                 <label class="campo-obrigatorio">Nome da Disciplina:</label>
-                <input type="text" name="nome" required placeholder="Ex: Matemática Básica">
+                <input type="text" name="nome" required>
             </div>
 
             <div class="form-group">
                 <label class="campo-obrigatorio">Descrição:</label>
-                <textarea name="descricao" required placeholder="Descreva o conteúdo da disciplina..."></textarea>
+                <textarea name="descricao" required></textarea>
             </div>
             
             <div class="form-group">
                 <label class="campo-obrigatorio">Carga Horária (horas):</label>
-                <input type="number" name="carga_horaria" required min="1" max="200" value="40">
-                <div class="info-text">Mínimo: 1 hora | Máximo: 200 horas</div>
+                <input type="number" name="carga_horaria" required min="1" max="200">
             </div>
-            
+
             <div class="form-group">
                 <label class="campo-obrigatorio">Nível:</label>
                 <select name="nivel" required>
-                    <option value="">Selecione o nível...</option>
+                    <option value="">Selecione...</option>
                     <option value="Basico">Básico</option>
                     <option value="Intermediario">Intermediário</option>
                     <option value="Avancado">Avançado</option>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label class="campo-obrigatorio">Documento da Disciplina:</label>
+                <input type="file" name="documento" required>
             </div>
 
             <div class="form-group">
@@ -177,14 +146,15 @@
             </div>
 
             <div class="btn-group">
-                <button type="submit" class="btn btn-primary">📚 Cadastrar Disciplina</button>
-                <button type="reset" class="btn btn-secondary">🗑️ Limpar</button>
+                <button type="submit" class="btn btn-primary">Cadastrar Disciplina</button>
+                <button type="reset" class="btn btn-secondary">Limpar</button>
             </div>
         </form>
 
-        <div style="text-align: center; margin-top: 20px;">
-            <a href="../home_admin.html" class="btn-voltar">← Voltar para Home</a>
+        <div style="text-align:center; margin-top:20px;">
+            <a href="../home_admin.html" class="btn-voltar">← Voltar</a>
         </div>
+
     </div>
 </body>
 </html>
