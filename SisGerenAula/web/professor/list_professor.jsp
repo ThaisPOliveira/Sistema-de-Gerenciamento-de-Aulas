@@ -172,7 +172,7 @@
     <% } %>
 
     <p>
-        <a href="regist_professor.jsp" class="btn-novo">
+        <a href="professor/regist_professor.jsp" class="btn-novo">
             + Cadastrar Novo Professor
         </a>
     </p>
