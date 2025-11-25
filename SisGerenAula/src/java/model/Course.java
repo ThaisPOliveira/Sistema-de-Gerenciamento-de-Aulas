@@ -13,6 +13,7 @@ public class Course {
     private String nivel;
     private boolean ativa;
     private String documento;
+    
 
     // GET
     public String getDocumento() {
