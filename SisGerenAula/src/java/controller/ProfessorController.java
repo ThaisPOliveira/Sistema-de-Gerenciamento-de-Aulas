@@ -172,7 +172,7 @@ public class ProfessorController extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             ProfessorDAO dao = new ProfessorDAO();
-            boolean sucesso = dao.desativar(id);
+            boolean sucesso = dao.desativar(id);//o codigo diz q nao existe
             
             if (sucesso) {
                 response.sendRedirect("professor?action=listar&sucesso=Professor desativado com sucesso");
@@ -191,7 +191,7 @@ public class ProfessorController extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             ProfessorDAO dao = new ProfessorDAO();
-            boolean sucesso = dao.ativar(id);
+            boolean sucesso = dao.ativar(id);//ativar nao existe
             
             if (sucesso) {
                 response.sendRedirect("professor?action=listar&sucesso=Professor ativado com sucesso");

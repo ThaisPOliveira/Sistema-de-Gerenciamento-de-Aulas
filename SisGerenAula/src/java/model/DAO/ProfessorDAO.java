@@ -13,7 +13,6 @@ import model.Professor;
 
 public class ProfessorDAO {
 
-
     private String hashSenha(String senha) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -31,13 +30,11 @@ public class ProfessorDAO {
         }
     }
 
-
     public boolean cadastrar(Professor professor) throws ClassNotFoundException {
-        String sql = "INSERT INTO professor (nome, cpf, email, telefone, formacao, senha, imagem, ativo) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO professor (nome, cpf, email, telefone, formacao, senha, imagem, ativo) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = ConectaDB.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, professor.getNome());
             stmt.setString(2, professor.getCpf());
@@ -45,7 +42,6 @@ public class ProfessorDAO {
             stmt.setString(4, professor.getTelefone());
             stmt.setString(5, professor.getFormacao());
 
-            
             stmt.setString(6, hashSenha(professor.getSenha()));
 
             if (professor.getImagem() != null && professor.getImagem().length > 0) {
@@ -65,14 +61,11 @@ public class ProfessorDAO {
         }
     }
 
-
     public List<Professor> listarTodos() throws ClassNotFoundException {
         List<Professor> professores = new ArrayList<>();
         String sql = "SELECT * FROM professor ORDER BY nome";
 
-        try (Connection conn = ConectaDB.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Professor professor = extrairProfessorResultSet(rs);
@@ -90,9 +83,7 @@ public class ProfessorDAO {
         List<Professor> professores = new ArrayList<>();
         String sql = "SELECT * FROM professor WHERE ativo = true ORDER BY nome";
 
-        try (Connection conn = ConectaDB.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Professor professor = extrairProfessorResultSet(rs);
@@ -110,8 +101,7 @@ public class ProfessorDAO {
         String sql = "SELECT * FROM professor WHERE id_professor = ?";
         Professor professor = null;
 
-        try (Connection conn = ConectaDB.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -130,11 +120,10 @@ public class ProfessorDAO {
     }
 
     public boolean editar(Professor professor) throws ClassNotFoundException {
-        String sql = "UPDATE professor SET nome=?, cpf=?, email=?, telefone=?, " +
-                     "formacao=?, senha=?, imagem=?, ativo=? WHERE id_professor=?";
+        String sql = "UPDATE professor SET nome=?, cpf=?, email=?, telefone=?, "
+                + "formacao=?, senha=?, imagem=?, ativo=? WHERE id_professor=?";
 
-        try (Connection conn = ConectaDB.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, professor.getNome());
             stmt.setString(2, professor.getCpf());
@@ -142,7 +131,6 @@ public class ProfessorDAO {
             stmt.setString(4, professor.getTelefone());
             stmt.setString(5, professor.getFormacao());
 
-           
             if (professor.getSenha() != null && !professor.getSenha().isEmpty()) {
                 stmt.setString(6, hashSenha(professor.getSenha()));
             } else {
@@ -166,7 +154,57 @@ public class ProfessorDAO {
         }
     }
 
-  
+    public Professor login(String email, String senha) throws ClassNotFoundException {
+        String sql = "SELECT * FROM professor WHERE email = ? AND senha = ?";
+
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            stmt.setString(2, hashSenha(senha)); // compara com o hash no banco
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return extrairProfessorResultSet(rs);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    public boolean desativar(int id) throws ClassNotFoundException {
+    String sql = "UPDATE professor SET ativo = false WHERE id_professor = ?";
+
+    try (Connection conn = ConectaDB.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, id);
+        return stmt.executeUpdate() > 0;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+
+public boolean ativar(int id) throws ClassNotFoundException {
+    String sql = "UPDATE professor SET ativo = true WHERE id_professor = ?";
+
+    try (Connection conn = ConectaDB.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, id);
+        return stmt.executeUpdate() > 0;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+
+
     private Professor extrairProfessorResultSet(ResultSet rs) throws SQLException {
         Professor professor = new Professor();
         professor.setId_professor(rs.getInt("id_professor"));

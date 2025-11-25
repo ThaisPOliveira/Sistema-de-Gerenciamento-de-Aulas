@@ -78,7 +78,6 @@ if (turmas.isEmpty()) {
 %>
 
 <br>
-<a href="ClassForm.jsp">Cadastrar nova turma</a> |
 <a href="../home_professor.html">Voltar à Home</a>
 
 </body>
