@@ -7,6 +7,7 @@ import config.ConectaDB;
 
 public class ClassDAO {
 
+    // ... mantém TODOS os outros métodos EXATAMENTE como estão ...
    
     public boolean cadastrar(Class turma) throws ClassNotFoundException {
         String sql = "INSERT INTO turma (nome_turma, nome_professor, nome_aluno, id_disciplina, horario) VALUES (?, ?, ?, ?, ?)";
@@ -155,22 +156,55 @@ public class ClassDAO {
             return "Nenhum aluno";
         }
         
+       
+        
+        // Verifica se já são nomes (contém letras) ou são IDs (apenas números)
+        if (idsAlunos.matches(".*[a-zA-Z].*")) {
+            // Já são nomes - retorna diretamente
+            System.out.println("✅ Já são nomes, retornando diretamente: " + idsAlunos);
+            return idsAlunos;
+        }
+        
+        // São IDs - busca os nomes no banco
         StringBuilder nomes = new StringBuilder();
         
-        String sql = "SELECT nome FROM alunos WHERE id IN (" + idsAlunos + ")";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                if (nomes.length() > 0) {
-                    nomes.append(", ");
-                }
-                nomes.append(rs.getString("nome"));
+        try {
+            // Divide os IDs pela vírgula
+            String[] idsArray = idsAlunos.split(",");
+            List<String> placeholders = new ArrayList<>();
+            
+            // Cria os placeholders para a query
+            for (int i = 0; i < idsArray.length; i++) {
+                placeholders.add("?");
             }
+            
+            // Query com PreparedStatement para evitar SQL injection
+            String sql = "SELECT nome FROM alunos WHERE id IN (" + String.join(",", placeholders) + ")";
+            
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                // Define os parâmetros
+                for (int i = 0; i < idsArray.length; i++) {
+                    stmt.setInt(i + 1, Integer.parseInt(idsArray[i].trim()));
+                }
+                
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        if (nomes.length() > 0) {
+                            nomes.append(", ");
+                        }
+                        nomes.append(rs.getString("nome"));
+                    }
+                }
+            }
+            
+            System.out.println("✅ Nomes encontrados: " + nomes.toString());
 
         } catch (SQLException e) {
             System.err.println("❌ Erro ao buscar nomes dos alunos: " + e.getMessage());
+            e.printStackTrace();
+            return "Erro ao carregar alunos";
+        } catch (NumberFormatException e) {
+            System.err.println("❌ Erro ao converter IDs: " + e.getMessage());
             return "Erro ao carregar alunos";
         }
 
