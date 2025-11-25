@@ -18,6 +18,7 @@ import model.Aluno;
 
 public class TurmaDAO {
 
+
     public List<Turma> listarTurmasComAlunos() throws ClassNotFoundException {
         List<Turma> turmas = new ArrayList<>();
 
@@ -37,7 +38,6 @@ public class TurmaDAO {
                 turma.setHorario(rs.getString("horario"));
                 turma.setNomeDisciplina(rs.getString("disciplina_nome"));
 
-            
                 turma.setAlunos(buscarAlunosPorTurma(turma.getIdTurma()));
                 turmas.add(turma);
             }
@@ -48,6 +48,7 @@ public class TurmaDAO {
 
         return turmas;
     }
+
 
     private List<Aluno> buscarAlunosPorTurma(int idTurma) throws ClassNotFoundException {
         List<Aluno> alunos = new ArrayList<>();
@@ -75,4 +76,41 @@ public class TurmaDAO {
 
         return alunos;
     }
+
+
+   
+    public List<Turma> listarTurmasPorProfessor(int idProfessor) throws ClassNotFoundException {
+        List<Turma> turmas = new ArrayList<>();
+
+        String sql = "SELECT t.id_turma, t.nome_turma, t.nome_professor, t.horario, d.nome AS disciplina_nome "
+                   + "FROM turma t "
+                   + "JOIN disciplina d ON t.id_disciplina = d.id "
+                   + "WHERE t.id_professor = ?";  
+
+        try (Connection conn = ConectaDB.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idProfessor); 
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Turma turma = new Turma();
+                    turma.setIdTurma(rs.getInt("id_turma"));
+                    turma.setNomeTurma(rs.getString("nome_turma"));
+                    turma.setNomeProfessor(rs.getString("nome_professor"));
+                    turma.setHorario(rs.getString("horario"));
+                    turma.setNomeDisciplina(rs.getString("disciplina_nome"));
+
+                    turma.setAlunos(buscarAlunosPorTurma(turma.getIdTurma()));
+                    turmas.add(turma);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return turmas;
+    }
+
 }
