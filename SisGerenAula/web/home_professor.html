@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home Professor - Sistema de Gerenciamento</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background: #f4f4f4;
+                margin: 0;
+                padding: 20px;
+            }
+            
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                padding: 40px;
+                text-align: center;
+            }
+            
+            .titulo-principal {
+                color: #007BFF;
+                text-align: center;
+                margin-bottom: 30px;
+                border-bottom: 2px solid #007BFF;
+                padding-bottom: 15px;
+                font-size: 24px;
+            }
+            
+            .subtitulo {
+                color: #666;
+                text-align: center;
+                margin-bottom: 30px;
+                font-size: 16px;
+                line-height: 1.5;
+            }
+            
+            .menu-principal {
+                margin: 30px 0;
+            }
+            
+            .btn-acao {
+                display: block;
+                padding: 15px 20px;
+                background: #007BFF;
+                color: white;
+                text-decoration: none;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 15px;
+                border: 2px solid #007BFF;
+            }
+            
+            .btn-acao:hover {
+                background: white;
+                color: #007BFF;
+                text-decoration: none;
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+            }
+            
+            .btn-sair {
+                display: inline-block;
+                padding: 12px 25px;
+                background: #dc3545;
+                color: white;
+                text-decoration: none;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+                font-size: 14px;
+                font-weight: bold;
+                margin-top: 20px;
+                border: 2px solid #dc3545;
+            }
+            
+            .btn-sair:hover {
+                background: white;
+                color: #dc3545;
+                text-decoration: none;
+                transform: translateY(-2px);
+                box-shadow: 0 3px 10px rgba(220,53,69,0.3);
+            }
+            
+            .icone {
+                font-size: 48px;
+                margin-bottom: 20px;
+                color: #007BFF;
+            }
+            
+            .info-box {
+                background: #f8f9fa;
+                padding: 20px;
+                border-radius: 8px;
+                margin: 25px 0;
+                border-left: 4px solid #28a745;
+            }
+            
+            .info-box h3 {
+                color: #333;
+                margin-top: 0;
+                margin-bottom: 10px;
+            }
+            
+            .info-box p {
+                color: #666;
+                margin: 0;
+                line-height: 1.5;
+            }
+            
+            @media (max-width: 600px) {
+                .container {
+                    padding: 30px 20px;
+                    margin: 10px;
+                }
+                
+                .titulo-principal {
+                    font-size: 20px;
+                }
+                
+                .btn-acao {
+                    padding: 12px 15px;
+                    font-size: 14px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="icone">👨‍🏫</div>
+            <h1 class="titulo-principal">Bem-vindo ao Sistema de Visualização</h1>
+            <p class="subtitulo">Acesso restrito para professores - Visualize suas turmas e atividades</p>
+            
+            <div class="info-box">
+                <h3>📊 Seu Painel de Controle</h3>
+                <p>Aqui você pode visualizar todas as turmas atribuídas e acompanhar o desempenho dos alunos.</p>
+            </div>
+            
+            <div class="menu-principal">
+                <a href="class/ClassList_prof.jsp" class="btn-acao">
+                    👁️ Visualizar Minhas Turmas
+                </a>
+            </div>
+            
+            <a href="index.html" class="btn-sair">🚪 Sair do Sistema</a>
+        </div>
+    </body>
+</html>
