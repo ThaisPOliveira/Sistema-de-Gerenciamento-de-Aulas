@@ -984,7 +984,11 @@ exists or setup the property manually. For example like this:
     <target depends="init" if="dist.ear.dir" name="library-inclusion-in-manifest">
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         <copyfiles files="${libs.socorro.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+=======
+        <copyfiles files="${libs.mysql-connector-j-9.4.0.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+>>>>>>> Stashed changes
 =======
         <copyfiles files="${libs.mysql-connector-j-9.4.0.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
 >>>>>>> Stashed changes
@@ -997,7 +1001,11 @@ exists or setup the property manually. For example like this:
     <target depends="init" name="library-inclusion-in-archive" unless="dist.ear.dir">
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         <copyfiles files="${libs.socorro.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
+=======
+        <copyfiles files="${libs.mysql-connector-j-9.4.0.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
+>>>>>>> Stashed changes
 =======
         <copyfiles files="${libs.mysql-connector-j-9.4.0.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
 >>>>>>> Stashed changes
