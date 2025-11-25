@@ -6,8 +6,6 @@ import model.Class;
 import config.ConectaDB;
 
 public class ClassDAO {
-
-    // ... mantém TODOS os outros métodos EXATAMENTE como estão ...
    
     public boolean cadastrar(Class turma) throws ClassNotFoundException {
         String sql = "INSERT INTO turma (nome_turma, nome_professor, nome_aluno, id_disciplina, horario) VALUES (?, ?, ?, ?, ?)";
@@ -151,12 +149,14 @@ public class ClassDAO {
         return turma;
     }
 
+    // CORREÇÃO APENAS DESTE MÉTODO - buscarNomesAlunos
     private String buscarNomesAlunos(String idsAlunos, Connection conn) {
         if (idsAlunos == null || idsAlunos.trim().isEmpty()) {
             return "Nenhum aluno";
         }
         
-       
+        // DEBUG: Verifica o que está vindo
+        System.out.println("🔍 IDs recebidos: '" + idsAlunos + "'");
         
         // Verifica se já são nomes (contém letras) ou são IDs (apenas números)
         if (idsAlunos.matches(".*[a-zA-Z].*")) {
