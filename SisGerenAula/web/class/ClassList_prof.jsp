@@ -1,7 +1,7 @@
 <%-- 
     Document   : ClassList_prof
     Created on : 12 de nov. de 2025
-    Author     : Happy
+    Author     : Matheus e Thais
 --%>
 
 <%@page import="java.util.List"%>
