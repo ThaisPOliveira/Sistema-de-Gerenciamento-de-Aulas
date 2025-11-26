@@ -4,11 +4,42 @@
                  Thais Oliveira 
     UNIVERSIDADE MOGI DAS CRUZES 
 -->
+    
+<%@page import="java.util.List"%>
+<%@page import="model.Turma"%>
+<%@page import="model.Professor"%>
+<%@page import="model.DAO.TurmaDAO"%>
+
+<%
+    // Recuperar professor logado da sessão
+    Professor prof = (Professor) session.getAttribute("professor");
+
+    if (prof == null) {
+        response.sendRedirect("index.html");
+        return;
+    }
+
+    TurmaDAO dao = new TurmaDAO();
+    List<Turma> turmas = dao.listarTurmasPorProfessor(prof.getId_professor());
+    
+    // Calcular estatísticas
+    int totalAlunos = 0;
+    for (Turma t : turmas) {
+        totalAlunos += t.getAlunos().size();
+    }
+    
+    // Contar disciplinas únicas
+    java.util.Set<String> disciplinas = new java.util.HashSet<>();
+    for (Turma t : turmas) {
+        disciplinas.add(t.getNomeDisciplina());
+    }
+%>
+
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Admin - Sistema de Gerenciamento</title>
+    <title>Home Professor - Sistema de Gerenciamento</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -135,7 +166,6 @@
             margin: 15px 0;
         }
         
-        /* ConteÃºdo Principal */
         .main-content {
             flex: 1;
             margin-left: var(--sidebar-width);
@@ -144,7 +174,6 @@
             min-height: 100vh;
         }
         
-        /* Header */
         .header {
             height: var(--header-height);
             background: white;
@@ -186,7 +215,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--primary-color);
+            background: var(--warning-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -210,7 +239,7 @@
             color: var(--secondary-color);
         }
         
-        /* ConteÃºdo da PÃ¡gina */
+        /* Conteúdo da Página */
         .page-content {
             flex: 1;
             padding: 30px;
@@ -225,6 +254,7 @@
             margin-bottom: 30px;
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
         
         .welcome-section::before {
@@ -237,6 +267,12 @@
             background: linear-gradient(90deg, var(--primary-color), var(--success-color), var(--warning-color));
         }
         
+        .welcome-icon {
+            font-size: 60px;
+            color: var(--warning-color);
+            margin-bottom: 20px;
+        }
+        
         .welcome-title {
             font-size: 28px;
             color: var(--dark-color);
@@ -247,6 +283,38 @@
             color: var(--secondary-color);
             font-size: 16px;
             margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        .info-box {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .info-box h3 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-box h3 i {
+            margin-right: 10px;
+            color: var(--success-color);
+        }
+        
+        .info-box p {
+            color: var(--secondary-color);
+            line-height: 1.6;
+            margin-bottom: 0;
         }
         
         .stats-container {
@@ -276,15 +344,15 @@
             border-left-color: var(--primary-color);
         }
         
-        .stat-card.disciplinas {
+        .stat-card.aulas {
             border-left-color: var(--success-color);
         }
         
-        .stat-card.professores {
+        .stat-card.alunos {
             border-left-color: var(--warning-color);
         }
         
-        .stat-card.alunos {
+        .stat-card.disciplinas {
             border-left-color: var(--info-color);
         }
         
@@ -304,17 +372,17 @@
             color: var(--primary-color);
         }
         
-        .stat-card.disciplinas .stat-icon {
+        .stat-card.aulas .stat-icon {
             background: rgba(40, 167, 69, 0.1);
             color: var(--success-color);
         }
         
-        .stat-card.professores .stat-icon {
+        .stat-card.alunos .stat-icon {
             background: rgba(255, 193, 7, 0.1);
             color: var(--warning-color);
         }
         
-        .stat-card.alunos .stat-icon {
+        .stat-card.disciplinas .stat-icon {
             background: rgba(23, 162, 184, 0.1);
             color: var(--info-color);
         }
@@ -341,88 +409,79 @@
             gap: 25px;
         }
         
-        .action-section {
+        .action-card {
             background: white;
             border-radius: 15px;
-            padding: 25px;
+            padding: 30px;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
         
-        .action-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary-color);
         }
         
-        .section-header {
-            display: flex;
-            align-items: center;
+        .action-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .action-icon {
+            font-size: 50px;
+            color: var(--primary-color);
             margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
         }
         
-        .section-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
+        .action-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .action-description {
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .btn-action {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
-            font-size: 18px;
-            color: white;
-        }
-        
-        .turmas-section .section-icon {
+            padding: 12px 25px;
             background: var(--primary-color);
-        }
-        
-        .disciplinas-section .section-icon {
-            background: var(--success-color);
-        }
-        
-        .professores-section .section-icon {
-            background: var(--warning-color);
-        }
-        
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--dark-color);
-        }
-        
-        .menu-links {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .btn-link {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background: var(--light-color);
-            color: var(--dark-color);
+            color: white;
             text-decoration: none;
-            border-radius: 10px;
+            border-radius: 8px;
             transition: var(--transition);
-            font-weight: 500;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            width: 100%;
         }
         
-        .btn-link:hover {
-            background: var(--primary-color);
+        .btn-action:hover {
+            background: var(--primary-dark);
             color: white;
             text-decoration: none;
-            transform: translateX(5px);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
         }
         
-        .btn-link i {
-            margin-right: 12px;
-            font-size: 16px;
+        .btn-action i {
+            margin-right: 8px;
         }
         
-        /* Footer */
         .footer {
             background: white;
             padding: 20px 30px;
@@ -458,7 +517,7 @@
             text-decoration: none;
         }
         
-        /* BotÃ£o Sair */
+        /* Botão Sair */
         .btn-sair {
             display: inline-flex;
             align-items: center;
@@ -574,7 +633,7 @@
             }
         }
         
-        /* AnimaÃ§Ãµes */
+        /* Animações */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -614,6 +673,7 @@
 </head>
 <body>
     <div class="app-container">
+        <!-- Menu Lateral -->
         <div class="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
@@ -624,65 +684,61 @@
                 </div>
             </div>
             
-            <div class="sidebar-menu">
-                <div class="menu-item active">
-                    <div class="menu-icon">
-                        <i class="fas fa-home"></i>
+           <div class="sidebar-menu">
+                    <div class="menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="menu-text" onclick="window.location.href='../home_professor.jsp'">Dashboard</div>
+                        
                     </div>
-                    <div class="menu-text">Dashboard</div>
-                </div>
-                
-                <div class="menu-divider"></div>
-                
-                <div class="menu-item">
-                    <div class="menu-icon">
-                        <i class="fas fa-users"></i>
+                    
+                    <div class="menu-divider"></div>
+                    
+                    <div class="menu-item active">
+                        <div class="menu-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="menu-text" onclick="window.location.href='class/ClassList_prof.jsp'" >Minhas Turmas</div>
                     </div>
-                    <div class="menu-text"  onclick="window.location='class/ClassList.jsp'">Turmas</div>
+                    
+                    <div class="menu-divider"></div>         
+                   
                 </div>
-                <div class="menu-item">
-                    <div class="menu-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <div class="menu-text" onclick="window.location='course/list_course.jsp'">Disciplinas</div>
-                </div>
-                
-                <div class="menu-item">
-                    <div class="menu-icon">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <div class="menu-text"  onclick="window.location='professor/list_professor.jsp'" >Professores</div>
-                </div>
-               
-                
-                <div class="menu-divider"></div>
-                
-               
-            </div>
         </div>
         
+        <!-- Conteúdo Principal -->
         <div class="main-content">
+            <!-- Header -->
             <header class="header">
                 <div class="header-left">
-                    <h1>Dashboard Admin</h1>
+                    <h1>Dashboard Professor</h1>
                 </div>
                 
                 <div class="header-right">
                     <div class="user-profile">
-                        <div class="user-avatar">AD</div>
+                        <div class="user-avatar">
+                            <%= prof.getNome().substring(0, 1).toUpperCase() %>
+                        </div>
                         <div class="user-info">
-                            <div class="user-name">Administrador</div>
-                            <div class="user-role">Super UsuÃ¡rio</div>
+                            <div class="user-name">Prof. <%= prof.getNome() %></div>
+                            <div class="user-role">Professor</div>
                         </div>
                     </div>
                 </div>
             </header>
             
+            <!-- Conteúdo da Página -->
             <div class="page-content">
-                <!-- SeÃ§Ã£o de Boas-vindas -->
                 <div class="welcome-section fade-in-up">
-                    <h2 class="welcome-title">Bem-vindo ao Sistema de Gerenciamento</h2>
-                    <p class="welcome-subtitle">Gerencie turmas, disciplinas e professores de forma eficiente e intuitiva</p>
+                    <div class="welcome-icon">??</div>
+                    <h2 class="welcome-title">Bem-vindo ao Sistema de Visualização</h2>
+                    <p class="welcome-subtitle">Acesso restrito para professores - Visualize suas turmas, atividades e acompanhe o desempenho dos alunos</p>
+                </div>
+                
+                <div class="info-box fade-in-up">
+                    <h3><i class="fas fa-info-circle"></i> Seu Painel de Controle</h3>
+                    <p>Aqui você pode visualizar todas as turmas atribuídas, gerenciar suas aulas, criar atividades e acompanhar o desempenho dos alunos de forma intuitiva e eficiente.</p>
                 </div>
                 
                 <div class="stats-container">
@@ -691,28 +747,8 @@
                             <i class="fas fa-users"></i>
                         </div>
                         <div class="stat-info">
-                            <div class="stat-number">0</div>
+                            <div class="stat-number"><%= turmas.size() %></div>
                             <div class="stat-label">Turmas Ativas</div>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-card disciplinas glow-card fade-in-up">
-                        <div class="stat-icon">
-                            <i class="fas fa-book"></i>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-number">0</div>
-                            <div class="stat-label">Disciplinas</div>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-card professores glow-card fade-in-up">
-                        <div class="stat-icon">
-                            <i class="fas fa-chalkboard-teacher"></i>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-number">0</div>
-                            <div class="stat-label">Professores</div>
                         </div>
                     </div>
                     
@@ -721,75 +757,37 @@
                             <i class="fas fa-user-graduate"></i>
                         </div>
                         <div class="stat-info">
-                            <div class="stat-number">0</div>
-                            <div class="stat-label">Alunos</div>
+                            <div class="stat-number"><%= totalAlunos %></div>
+                            <div class="stat-label">Total de Alunos</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card disciplinas glow-card fade-in-up">
+                        <div class="stat-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number"><%= disciplinas.size() %></div>
+                            <div class="stat-label">Disciplinas Ministradas</div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="actions-container">
-                    <div class="action-section turmas-section glow-card fade-in-up">
-                        <div class="section-header">
-                            <div class="section-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <h3 class="section-title">Turmas</h3>
+                    <!-- Visualizar Turmas -->
+                    <div class="action-card glow-card fade-in-up">
+                        <div class="action-icon">
+                            <i class="fas fa-users"></i>
                         </div>
-                        
-                        <div class="menu-links">
-                            <a href="class/ClassForm.jsp" class="btn-link">
-                                <i class="fas fa-plus-circle"></i>
-                                Cadastrar Nova Turma
-                            </a>
-                            <a href="class/ClassList.jsp" class="btn-link">
-                                <i class="fas fa-list"></i>
-                                Visualizar Turmas Cadastradas
-                            </a>
-                          
-                        </div>
+                        <h3 class="action-title">Minhas Turmas</h3>
+                        <p class="action-description">Visualize todas as turmas atribuídas a você, com informações detalhadas sobre alunos, horários e disciplinas.</p>
+                        <a href="class/ClassList_prof.jsp" class="btn-action">
+                            <i class="fas fa-eye"></i>
+                            Visualizar Turmas
+                        </a>
                     </div>
                     
-                    <div class="action-section disciplinas-section glow-card fade-in-up">
-                        <div class="section-header">
-                            <div class="section-icon">
-                                <i class="fas fa-book"></i>
-                            </div>
-                            <h3 class="section-title">Disciplinas</h3>
-                        </div>
-                        
-                        <div class="menu-links">
-                            <a href="course/course.html" class="btn-link">
-                                <i class="fas fa-plus-circle"></i>
-                                Cadastrar Nova Disciplina
-                            </a>
-                            <a href="course/list_course.jsp" class="btn-link">
-                                <i class="fas fa-list"></i>
-                                Visualizar Disciplinas Cadastradas
-                            </a>
-                            
-                        </div>
-                    </div>
-                    
-                    <div class="action-section professores-section glow-card fade-in-up">
-                        <div class="section-header">
-                            <div class="section-icon">
-                                <i class="fas fa-chalkboard-teacher"></i>
-                            </div>
-                            <h3 class="section-title">Professores</h3>
-                        </div>
-                        
-                        <div class="menu-links">
-                            <a href="professor/regist_professor.jsp" class="btn-link">
-                                <i class="fas fa-plus-circle"></i>
-                                Cadastrar Novo Professor
-                            </a>
-                            <a href="professor/list_professor.jsp" class="btn-link">
-                                <i class="fas fa-list"></i>
-                                Visualizar Professores Cadastrados
-                            </a>
-                            
-                        </div>
-                    </div>
+                   
                 </div>
                 
                 <div style="text-align: center; margin-top: 40px;">
@@ -808,7 +806,7 @@
                 &copy; 2025 Sistema de Gerenciamento de Aulas. Todos os direitos reservados.
             </div>
             <div class="footer-links">
-                <a href="#" class="footer-link">PolÃ­tica de Privacidade</a>
+                <a href="#" class="footer-link">Política de Privacidade</a>
                 <a href="#" class="footer-link">Termos de Uso</a>
                 <a href="#" class="footer-link">Suporte</a>
             </div>

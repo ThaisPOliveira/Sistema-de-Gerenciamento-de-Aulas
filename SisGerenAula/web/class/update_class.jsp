@@ -12,15 +12,9 @@
     String horario = request.getParameter("horario");
     String idDisciplinaParam = request.getParameter("idDisciplina");
     
-    System.out.println("🔍 Processando atualização da turma:");
-    System.out.println("🔍 ID: " + idParam);
-    System.out.println("🔍 Nome Turma: " + nomeTurma);
-    System.out.println("🔍 Professor: " + nomeProfessor);
-    System.out.println("🔍 Horário: " + horario);
-    System.out.println("🔍 Disciplina ID: " + idDisciplinaParam);
+   
     
     if (idParam == null || nomeTurma == null || nomeProfessor == null || horario == null || idDisciplinaParam == null) {
-        System.out.println("❌ Dados incompletos");
         response.sendRedirect("ClassList.jsp?erro=Dados incompletos");
         return;
     }
@@ -48,28 +42,22 @@
                 }
             }
             turma.setNomeAlunos(nomesAlunos.toString());
-            System.out.println("🔍 Nomes alunos: " + nomesAlunos.toString());
         } else {
             turma.setNomeAlunos("");
-            System.out.println("🔍 Nenhum aluno selecionado");
         }
         
         ClassDAO dao = new ClassDAO();
         boolean sucesso = dao.atualizarTurma(turma);
         
         if (sucesso) {
-            System.out.println("✅ Turma atualizada com sucesso");
             response.sendRedirect("ClassList.jsp?sucesso=Turma atualizada com sucesso");
         } else {
-            System.out.println("❌ Erro ao atualizar turma no banco");
             response.sendRedirect("EditClass.jsp?id=" + id + "&erro=Erro ao atualizar turma");
         }
         
     } catch (NumberFormatException e) {
-        System.out.println("❌ ID inválido: " + e.getMessage());
         response.sendRedirect("ClassList.jsp?erro=ID inválido");
     } catch (Exception e) {
-        System.out.println("❌ Erro geral: " + e.getMessage());
         e.printStackTrace();
         response.sendRedirect("ClassList.jsp?erro=Erro ao processar atualização: " + e.getMessage());
     }

@@ -21,7 +21,7 @@
 
             if (prof != null) {
                 session.setAttribute("professor", prof);
-                response.sendRedirect("../home_professor.html");
+                response.sendRedirect("../home_professor.jsp");
                 return;
             }
 

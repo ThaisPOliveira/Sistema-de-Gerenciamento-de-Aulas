@@ -1,9 +1,21 @@
-<%@page import="model.Professor"%>
+<%@page import="model.Professor, model.DAO.ProfessorDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    Professor professor = (Professor) request.getAttribute("professor");
+    Professor professor = null;
+    String idParam = request.getParameter("id");
+    
+    if (idParam != null && !idParam.isEmpty()) {
+        try {
+            int id = Integer.parseInt(idParam);
+            ProfessorDAO professorDAO = new ProfessorDAO();
+            professor = professorDAO.buscarPorId(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     if (professor == null) {
-        response.sendRedirect("professor?action=listar&erro=Professor não encontrado");
+        response.sendRedirect("list_professor.jsp?erro=Professor não encontrado");
         return;
     }
 %>
@@ -163,7 +175,7 @@
         <% } %>
     </div>
 
-    <form action="professor?action=atualizar" method="post" enctype="multipart/form-data">
+    <form action="update_professor.jsp" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id_professor" value="<%= professor.getId_professor() %>">
         
         <div class="form-group">
@@ -192,13 +204,14 @@
         </div>
 
         <div class="form-group">
-            <label class="label campo-obrigatorio">Senha:</label>
-            <input type="password" name="senha" value="<%= professor.getSenha() %>" required>
+            <label class="label">Nova Senha:</label>
+            <input type="password" name="senha" placeholder="Deixe em branco para manter a senha atual">
+            <div class="info-foto">Deixe em branco para manter a senha atual</div>
         </div>
 
         <div class="form-group">
-            <label class="label campo-obrigatorio">Confirmar Senha:</label>
-            <input type="password" name="confirmar_senha" value="<%= professor.getSenha() %>" required>
+            <label class="label">Confirmar Senha:</label>
+            <input type="password" name="confirmar_senha" placeholder="Deixe em branco para manter a senha atual">
         </div>
 
         <div class="form-group">
@@ -217,7 +230,7 @@
 
         <div style="text-align: center; margin-top: 25px;">
             <button type="submit" class="btn btn-salvar">Atualizar Professor</button>
-            <a href="professor?action=listar" class="btn btn-cancelar">Cancelar</a>
+            <a href="list_professor.jsp" class="btn btn-cancelar">Cancelar</a>
         </div>
     </form>
 </div>

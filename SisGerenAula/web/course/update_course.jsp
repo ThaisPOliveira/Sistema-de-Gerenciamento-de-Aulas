@@ -190,7 +190,7 @@
             
             <div class="btn-group">
                 <button type="submit" class="btn btn-salvar">Salvar Alterações</button>
-                <a href="list_course.jsp" class="btn btn-cancelar"> Cancelar</a>
+                <a href="list_course.jsp" class="btn btn-cancelar">   Voltar para Lista</a>
             </div>
         </form>
     </div>
