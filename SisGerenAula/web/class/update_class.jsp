@@ -38,7 +38,7 @@
                         nomesAlunos.append(", ");
                     }
                     
-                    nomesAlunos.append("Aluno ID: ").append(alunoId);
+                    nomesAlunos.append("").append(alunoId);
                 }
             }
             turma.setNomeAlunos(nomesAlunos.toString());
