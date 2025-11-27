@@ -13,13 +13,13 @@
     String idParam = request.getParameter("id");
     Class turma = null;
     List<Integer> alunosSelecionados = new ArrayList<>();
-    
+
     if (idParam != null && !idParam.isEmpty()) {
         try {
             int id = Integer.parseInt(idParam);
             ClassDAO dao = new ClassDAO();
             turma = dao.buscarPorId(id);
-            
+
             if (turma != null && turma.getNomeAlunos() != null && !turma.getNomeAlunos().isEmpty()) {
                 String[] idsArray = turma.getNomeAlunos().split(",");
                 for (String idAluno : idsArray) {
@@ -36,7 +36,7 @@
             return;
         }
     }
-    
+
     if (turma == null) {
         response.sendRedirect("ClassList.jsp?erro=Turma não encontrada");
         return;
@@ -67,21 +67,21 @@
                 --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
                 --transition: all 0.3s ease;
             }
-            
+
             * {
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
-            
+
             body {
                 background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
                 min-height: 100vh;
                 padding: 30px 20px;
                 color: var(--dark-color);
             }
-            
+
             .container {
                 max-width: 800px;
                 margin: 0 auto;
@@ -91,7 +91,7 @@
                 padding: 40px;
                 position: relative;
             }
-            
+
             .titulo {
                 color: var(--primary-color);
                 text-align: center;
@@ -100,7 +100,7 @@
                 font-weight: 700;
                 position: relative;
             }
-            
+
             .titulo::after {
                 content: '';
                 position: absolute;
@@ -112,7 +112,7 @@
                 background: linear-gradient(90deg, var(--primary-color), var(--success-color));
                 border-radius: 2px;
             }
-            
+
             /* Alertas */
             .alert {
                 padding: 15px 20px;
@@ -125,19 +125,19 @@
                 animation: slideIn 0.5s ease-out;
                 border-left: 4px solid;
             }
-            
+
             .alert-error {
                 background: #f8d7da;
                 color: #721c24;
                 border-left-color: var(--danger-color);
             }
-            
+
             .alert-warning {
                 background: #fff3cd;
                 color: #856404;
                 border-left-color: var(--warning-color);
             }
-            
+
             @keyframes slideIn {
                 from {
                     opacity: 0;
@@ -148,12 +148,12 @@
                     transform: translateY(0);
                 }
             }
-            
+
             /* Formulários */
             .form-group {
                 margin-bottom: 25px;
             }
-            
+
             label {
                 display: block;
                 font-weight: 600;
@@ -161,12 +161,12 @@
                 margin-bottom: 8px;
                 font-size: 14px;
             }
-            
+
             .campo-obrigatorio::after {
                 content: " *";
                 color: var(--danger-color);
             }
-            
+
             input[type="text"],
             input[type="time"],
             input[type="number"],
@@ -180,7 +180,7 @@
                 transition: var(--transition);
                 background: white;
             }
-            
+
             input[type="text"]:focus,
             input[type="time"]:focus,
             input[type="number"]:focus,
@@ -190,7 +190,7 @@
                 box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
                 transform: translateY(-2px);
             }
-            
+
             /* Select2 Customizado */
             .select2-container--default .select2-selection--multiple {
                 border: 2px solid #e9ecef;
@@ -199,12 +199,12 @@
                 padding: 8px;
                 transition: var(--transition);
             }
-            
+
             .select2-container--default .select2-selection--multiple:focus {
                 border-color: var(--primary-color);
                 box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
             }
-            
+
             .select2-container--default .select2-selection--multiple .select2-selection__choice {
                 background: var(--primary-color);
                 color: white;
@@ -213,7 +213,7 @@
                 padding: 4px 8px;
                 font-size: 13px;
             }
-            
+
             /* Botões */
             .btn-group {
                 display: flex;
@@ -221,7 +221,7 @@
                 margin-top: 30px;
                 flex-wrap: wrap;
             }
-            
+
             .btn {
                 padding: 14px 28px;
                 border: none;
@@ -239,13 +239,13 @@
                 flex: 1;
                 min-width: 140px;
             }
-            
+
             .btn-success {
                 background: var(--success-color);
                 color: white;
                 box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
             }
-            
+
             .btn-success:hover {
                 background: #218838;
                 transform: translateY(-3px);
@@ -253,19 +253,19 @@
                 text-decoration: none;
                 color: white;
             }
-            
+
             .btn-secondary {
                 background: var(--secondary-color);
                 color: white;
             }
-            
+
             .btn-secondary:hover {
                 background: #545b62;
                 transform: translateY(-3px);
                 text-decoration: none;
                 color: white;
             }
-            
+
             .btn-voltar {
                 display: inline-flex;
                 align-items: center;
@@ -279,14 +279,14 @@
                 font-weight: 600;
                 margin-top: 20px;
             }
-            
+
             .btn-voltar:hover {
                 background: #545b62;
                 transform: translateY(-2px);
                 text-decoration: none;
                 color: white;
             }
-            
+
             /* Informações adicionais */
             .info-text {
                 font-size: 13px;
@@ -294,7 +294,7 @@
                 margin-top: 6px;
                 font-style: italic;
             }
-            
+
             .alunos-selecionados {
                 margin-top: 12px;
                 padding: 12px 15px;
@@ -309,36 +309,36 @@
                 gap: 8px;
                 animation: slideIn 0.3s ease-out;
             }
-            
+
             /* Responsividade */
             @media (max-width: 768px) {
                 .container {
                     padding: 25px 20px;
                 }
-                
+
                 .titulo {
                     font-size: 26px;
                 }
-                
+
                 .btn-group {
                     flex-direction: column;
                 }
-                
+
                 .btn {
                     flex: none;
                     width: 100%;
                 }
             }
-            
+
             @media (max-width: 480px) {
                 body {
                     padding: 15px 10px;
                 }
-                
+
                 .container {
                     padding: 20px 15px;
                 }
-                
+
                 .titulo {
                     font-size: 22px;
                 }
@@ -352,29 +352,29 @@
                 Editar Turma
             </h1>
 
-            <% if (request.getParameter("erro") != null) { %>
-                <div class="alert alert-error">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <%= request.getParameter("erro") %>
-                </div>
+            <% if (request.getParameter("erro") != null) {%>
+            <div class="alert alert-error">
+                <i class="fas fa-exclamation-circle"></i>
+                <%= request.getParameter("erro")%>
+            </div>
             <% } %>
 
-            <% if (request.getParameter("warning") != null) { %>
-                <div class="alert alert-warning">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <%= request.getParameter("warning") %>
-                </div>
-            <% } %>
+            <% if (request.getParameter("warning") != null) {%>
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <%= request.getParameter("warning")%>
+            </div>
+            <% }%>
 
             <form method="post" action="update_class.jsp" id="editForm">
-                <input type="hidden" name="id_turma" value="<%= turma.getId() %>">
-                
+                <input type="hidden" name="id_turma" value="<%= turma.getId()%>">
+
                 <div class="form-group">
                     <label class="campo-obrigatorio">
                         <i class="fas fa-tag"></i>
                         Nome da Turma:
                     </label>
-                    <input type="text" name="nomeTurma" value="<%= turma.getNomeTurma() %>" required placeholder="Ex: Turma A - Matemática Avançada">
+                    <input type="text" name="nomeTurma" value="<%= turma.getNomeTurma()%>" required placeholder="Ex: Turma A - Matemática Avançada">
                 </div>
 
                 <div class="form-group">
@@ -389,7 +389,7 @@
                             List<Professor> professores = pdao.listarTodos();
                             for (Professor prof : professores) {
                         %>
-                        <option value="<%= prof.getNome()%>" <%= prof.getNome().equals(turma.getNomeProfessor()) ? "selected" : "" %>>
+                        <option value="<%= prof.getNome()%>" <%= prof.getNome().equals(turma.getNomeProfessor()) ? "selected" : ""%>>
                             <%= prof.getNome()%>
                         </option>
                         <%
@@ -409,7 +409,7 @@
                             List<Aluno> alunos = adao.listarAlunos();
                             for (Aluno a : alunos) {
                         %>
-                        <option value="<%= a.getId()%>" <%= alunosSelecionados.contains(a.getId()) ? "selected" : "" %>>
+                        <option value="<%= a.getId()%>" <%= alunosSelecionados.contains(a.getId()) ? "selected" : ""%>>
                             <%= a.getNome()%>
                         </option>
                         <%
@@ -424,7 +424,7 @@
                         <i class="fas fa-clock"></i>
                         Horário:
                     </label>
-                    <input type="time" name="horario" value="<%= turma.getHorario() != null ? turma.getHorario().toString() : "" %>" required>
+                    <input type="time" name="horario" value="<%= turma.getHorario() != null ? turma.getHorario().toString() : ""%>" required>
                 </div>
 
                 <div class="form-group">
@@ -439,7 +439,7 @@
                             List<Course> disciplinas = cdao.listarTodas();
                             for (Course d : disciplinas) {
                         %>
-                        <option value="<%= d.getId()%>" <%= d.getId() == turma.getIdDisciplina() ? "selected" : "" %>>
+                        <option value="<%= d.getId()%>" <%= d.getId() == turma.getIdDisciplina() ? "selected" : ""%>>
                             <%= d.getNome()%> - <%= d.getNivel()%>
                         </option>
                         <%
@@ -469,113 +469,113 @@
         </div>
 
         <script>
-  function showAlert(message, type) {
-    // Remove alertas existentes
-    const existingAlert = document.querySelector('.alert');
-    if (existingAlert) {
-        existingAlert.remove();
-    }
-    
-    // Cria o elemento do alerta
-    const alertDiv = document.createElement('div');
-    alertDiv.className = `alert alert-${type}`;
-    
-    // Ícone baseado no tipo - usando FontAwesome
-    const icon = type === 'success' ? 'fas fa-check-circle' : 
-                 type === 'error' ? 'fas fa-exclamation-circle' : 
-                 type === 'warning' ? 'fas fa-exclamation-triangle' : 'fas fa-info-circle';
-    
-    alertDiv.innerHTML = `
+            function showAlert(message, type) {
+                // Remove alertas existentes
+                const existingAlert = document.querySelector('.alert');
+                if (existingAlert) {
+                    existingAlert.remove();
+                }
+
+                // Cria o elemento do alerta
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert alert-${type}`;
+
+                // Ícone baseado no tipo - usando FontAwesome
+                const icon = type === 'success' ? 'fas fa-check-circle' :
+                        type === 'error' ? 'fas fa-exclamation-circle' :
+                        type === 'warning' ? 'fas fa-exclamation-triangle' : 'fas fa-info-circle';
+
+                alertDiv.innerHTML = `
         <i class="${icon}"></i>
         <span class="alert-message">${message}</span>
     `;
-    
-    // Adiciona ao container após o título
-    const container = document.querySelector('.container');
-    const titulo = document.querySelector('.titulo');
-    container.insertBefore(alertDiv, titulo.nextSibling);
-    
-    // Remove automaticamente após 5 segundos
-    setTimeout(() => {
-        if (alertDiv.parentNode) {
-            alertDiv.style.opacity = '0';
-            alertDiv.style.transform = 'translateY(-20px)';
-            setTimeout(() => alertDiv.remove(), 300);
-        }
-    }, 5000);
-}
 
-document.addEventListener('DOMContentLoaded', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const sucesso = urlParams.get('sucesso');
-    const erro = urlParams.get('erro');
-    const warning = urlParams.get('warning');
-    
-    if (sucesso) {
-        showAlert(sucesso, 'success');
-        // Limpa apenas os parâmetros de alerta, mantendo o ID
-        const novaUrl = window.location.pathname + '?id=<%= turma.getId() %>';
-        window.history.replaceState({}, document.title, novaUrl);
-    }
-    
-    if (erro) {
-        showAlert(erro, 'error');
-        // Mantém o erro na URL para debug, mas pode remover se quiser
-    }
-    
-    if (warning) {
-        showAlert(warning, 'warning');
-    }
-});
+                // Adiciona ao container após o título
+                const container = document.querySelector('.container');
+                const titulo = document.querySelector('.titulo');
+                container.insertBefore(alertDiv, titulo.nextSibling);
 
-$(document).ready(function () {
-    $('#alunosSelect').select2({
-        placeholder: "Selecione os alunos...",
-        allowClear: true,
-        width: '100%',
-        language: {
-            noResults: function() {
-                return "Nenhum aluno encontrado";
+                // Remove automaticamente após 5 segundos
+                setTimeout(() => {
+                    if (alertDiv.parentNode) {
+                        alertDiv.style.opacity = '0';
+                        alertDiv.style.transform = 'translateY(-20px)';
+                        setTimeout(() => alertDiv.remove(), 300);
+                    }
+                }, 5000);
             }
-        }
-    });
-    
-    function atualizarContadorAlunos() {
-        const selected = $('#alunosSelect').val();
-        $('.alunos-selecionados').remove();
-        
-        if (selected && selected.length > 0) {
-            $('#alunosSelect').after(`<div class="alunos-selecionados">
-                <i class="fas fa-user-graduate"></i>
-                ${selected.length} aluno(s) selecionado(s)
-            </div>`);
-        }
-    }
-    
-    // Inicializa o contador
-    atualizarContadorAlunos();
-    
-    // Atualiza quando há mudanças
-    $('#alunosSelect').on('change', atualizarContadorAlunos);
 
-    // Validação do formulário
-    $('#editForm').on('submit', function(e) {
-        const nomeTurma = $('input[name="nomeTurma"]').val().trim();
-        const professor = $('select[name="nomeProfessor"]').val();
-        const horario = $('input[name="horario"]').val();
-        const disciplina = $('select[name="idDisciplina"]').val();
-        
-        if (!nomeTurma || !professor || !horario || !disciplina) {
-            e.preventDefault();
-            showAlert('Por favor, preencha todos os campos obrigatórios.', 'warning');
-            return false;
-        }
-        
-        // Mostra loading
-        $('button[type="submit"]').html('<i class="fas fa-spinner fa-spin"></i> Atualizando...');
-        $('button[type="submit"]').prop('disabled', true);
-    });
-});
+            document.addEventListener('DOMContentLoaded', function () {
+                const urlParams = new URLSearchParams(window.location.search);
+                const sucesso = urlParams.get('sucesso');
+                const erro = urlParams.get('erro');
+                const warning = urlParams.get('warning');
+
+                if (sucesso) {
+                    showAlert(sucesso, 'success');
+                    // Limpa apenas os parâmetros de alerta, mantendo o ID
+                    const novaUrl = window.location.pathname + '?id=<%= turma.getId()%>';
+                    window.history.replaceState({}, document.title, novaUrl);
+                }
+
+                if (erro) {
+                    showAlert(erro, 'error');
+                    // Mantém o erro na URL para debug, mas pode remover se quiser
+                }
+
+                if (warning) {
+                    showAlert(warning, 'warning');
+                }
+            });
+
+            $(document).ready(function () {
+                $('#alunosSelect').select2({
+                    placeholder: "Selecione os alunos...",
+                    allowClear: true,
+                    width: '100%',
+                    language: {
+                        noResults: function () {
+                            return "Nenhum aluno encontrado";
+                        }
+                    }
+                });
+
+                function atualizarContadorAlunos() {
+                    const selected = $('#alunosSelect').val();
+                    $('.alunos-selecionados').remove();
+
+                    if (selected && selected.length > 0) {
+                        $('#alunosSelect').after(`<div class="alunos-selecionados">
+                <i class="fas fa-user-graduate"></i>
+            ${selected.length} aluno(s) selecionado(s)
+            </div>`);
+                    }
+                }
+
+                // Inicializa o contador
+                atualizarContadorAlunos();
+
+                // Atualiza quando há mudanças
+                $('#alunosSelect').on('change', atualizarContadorAlunos);
+
+                // Validação do formulário
+                $('#editForm').on('submit', function (e) {
+                    const nomeTurma = $('input[name="nomeTurma"]').val().trim();
+                    const professor = $('select[name="nomeProfessor"]').val();
+                    const horario = $('input[name="horario"]').val();
+                    const disciplina = $('select[name="idDisciplina"]').val();
+
+                    if (!nomeTurma || !professor || !horario || !disciplina) {
+                        e.preventDefault();
+                        showAlert('Por favor, preencha todos os campos obrigatórios.', 'warning');
+                        return false;
+                    }
+
+                    // Mostra loading
+                    $('button[type="submit"]').html('<i class="fas fa-spinner fa-spin"></i> Atualizando...');
+                    $('button[type="submit"]').prop('disabled', true);
+                });
+            });
         </script>
     </body>
 </html>

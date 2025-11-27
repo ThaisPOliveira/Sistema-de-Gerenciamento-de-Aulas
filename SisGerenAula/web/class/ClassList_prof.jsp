@@ -880,7 +880,7 @@
                 
                 <div class="page-content">
                     <div class="welcome-section fade-in-up">
-                        <div class="welcome-icon">???</div>
+                       
                         <h2 class="welcome-title">Minhas Turmas</h2>
                         <p class="welcome-subtitle">Gerencie e visualize todas as suas turmas atribuídas</p>
                     </div>

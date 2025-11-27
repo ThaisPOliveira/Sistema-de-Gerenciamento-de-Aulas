@@ -68,7 +68,7 @@ try {
 %>
 <script>
     alert("Disciplina cadastrada com sucesso!");
-    window.location.href = "../home_admin.html";
+    window.location.href = "../home_admin.jsp";
 </script>
 <%
     } else {

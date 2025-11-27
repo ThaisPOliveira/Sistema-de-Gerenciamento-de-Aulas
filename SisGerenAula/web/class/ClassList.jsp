@@ -626,7 +626,7 @@
             
             <div class="sidebar-menu">
                 <!-- Dashboard -->
-                <a href="../home_admin.html" class="menu-item">
+                <a href="../home_admin.jsp" class="menu-item">
                     <div class="menu-icon">
                         <i class="fas fa-home"></i>
                     </div>
@@ -797,7 +797,7 @@
                     </div>
 
                     <div style="text-align: center; margin-top: 20px;">
-                        <a href="../home_admin.html" class="btn-voltar">
+                        <a href="../home_admin.jsp" class="btn-voltar">
                             <i class="fas fa-arrow-left"></i>
                             Voltar para Dashboard
                         </a>

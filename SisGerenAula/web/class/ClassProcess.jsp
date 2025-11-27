@@ -46,14 +46,14 @@
 %>
     <script>
         alert("Turma cadastrada com sucesso!");
-        window.location.href = "../home_admin.html"; 
+        window.location.href = "../home_admin.jsp"; 
     </script>
 <%
         } else {
 %>
     <script>
         alert("Falha ao cadastrar a turma.");
-        window.location.href = "../class/Class.html"; 
+        window.location.href = "../class/ClassForm.jsp"; 
     </script>
 <%
         }

@@ -749,7 +749,7 @@
             <!-- Conteúdo da Página -->
             <div class="page-content">
                 <div class="welcome-section fade-in-up">
-                    <div class="welcome-icon">??</div>
+                    
                     <h2 class="welcome-title">Bem-vindo ao Sistema de Visualização</h2>
                     <p class="welcome-subtitle">Acesso restrito para professores - Visualize suas turmas, atividades e acompanhe o desempenho dos alunos</p>
                 </div>

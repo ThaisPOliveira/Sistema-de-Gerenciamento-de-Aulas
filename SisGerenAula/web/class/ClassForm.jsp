@@ -672,7 +672,7 @@
 
                 <div class="sidebar-menu">
                     <!-- Dashboard -->
-                    <a href="../home_admin.html" class="menu-item">
+                    <a href="../home_admin.jsp" class="menu-item">
                         <div class="menu-icon">
                             <i class="fas fa-home"></i>
                         </div>
