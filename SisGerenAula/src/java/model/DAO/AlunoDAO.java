@@ -9,18 +9,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import model.Aluno;
+
 /**
  *
  * @author Happy
  */
 public class AlunoDAO {
+
     public List<Aluno> listarAlunos() throws ClassNotFoundException {
         List<Aluno> alunos = new ArrayList<>();
         String sql = "SELECT id, nome, idade, responsavel, telefone FROM alunos";
 
-        try (Connection conn = ConectaDB.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Aluno aluno = new Aluno();
@@ -38,5 +38,22 @@ public class AlunoDAO {
         }
 
         return alunos;
+    }
+
+    public int countAlunos() {
+        String sql = "SELECT COUNT(*) FROM aluno";
+
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            System.err.println("❌ Erro ao contar alunos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }

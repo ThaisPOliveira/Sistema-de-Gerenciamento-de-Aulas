@@ -30,6 +30,23 @@ public class ProfessorDAO {
         }
     }
 
+    public int countProfessores() {
+        String sql = "SELECT COUNT(*) FROM professor";
+
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            System.err.println("❌ Erro ao contar professores: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
     public boolean cadastrar(Professor professor) throws ClassNotFoundException {
         String sql = "INSERT INTO professor (nome, cpf, email, telefone, formacao, senha, imagem, ativo) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -174,36 +191,34 @@ public class ProfessorDAO {
 
         return null;
     }
+
     public boolean desativar(int id) throws ClassNotFoundException {
-    String sql = "UPDATE professor SET ativo = false WHERE id_professor = ?";
+        String sql = "UPDATE professor SET ativo = false WHERE id_professor = ?";
 
-    try (Connection conn = ConectaDB.conectar();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        stmt.setInt(1, id);
-        return stmt.executeUpdate() > 0;
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() > 0;
 
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-}
 
-public boolean ativar(int id) throws ClassNotFoundException {
-    String sql = "UPDATE professor SET ativo = true WHERE id_professor = ?";
+    public boolean ativar(int id) throws ClassNotFoundException {
+        String sql = "UPDATE professor SET ativo = true WHERE id_professor = ?";
 
-    try (Connection conn = ConectaDB.conectar();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        stmt.setInt(1, id);
-        return stmt.executeUpdate() > 0;
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() > 0;
 
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-}
-
 
     private Professor extrairProfessorResultSet(ResultSet rs) throws SQLException {
         Professor professor = new Professor();

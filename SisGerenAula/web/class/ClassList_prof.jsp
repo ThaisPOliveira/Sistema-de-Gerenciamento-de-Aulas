@@ -3,14 +3,12 @@
     Created on : 12 de nov. de 2025
     Author     : Matheus e Thais
 --%>
-
 <%@page import="java.util.List"%>
 <%@page import="model.Turma"%>
 <%@page import="model.Professor"%>
 <%@page import="model.DAO.TurmaDAO"%>
 
 <%
-    // Recuperar professor logado da sessão
     Professor prof = (Professor) session.getAttribute("professor");
 
     if (prof == null) {
@@ -62,13 +60,11 @@
                 flex-direction: column;
             }
             
-            /* Layout Principal */
             .app-container {
                 display: flex;
                 min-height: 100vh;
             }
             
-            /* Sidebar/Menu Lateral */
             .sidebar {
                 width: var(--sidebar-width);
                 background: linear-gradient(180deg, var(--primary-color) 0%, var(--primary-dark) 100%);
@@ -110,29 +106,42 @@
             .logo-text {
                 font-size: 20px;
                 font-weight: 700;
+                color: white;
+                text-decoration: none;
+            }
+            
+            .logo-text:hover {
+                text-decoration: none;
+                color: white;
             }
             
             .sidebar-menu {
                 padding: 20px 0;
             }
             
-            .menu-item {
-                padding: 15px 25px;
+            .sidebar-menu a.menu-item {
                 display: flex;
                 align-items: center;
+                padding: 15px 25px;
+                text-decoration: none;
+                color: white;
                 transition: var(--transition);
                 cursor: pointer;
                 border-left: 4px solid transparent;
             }
             
-            .menu-item:hover {
+            .sidebar-menu a.menu-item:hover {
                 background: rgba(255, 255, 255, 0.1);
                 border-left-color: rgba(255, 255, 255, 0.5);
+                color: white;
+                text-decoration: none;
             }
             
-            .menu-item.active {
+            .sidebar-menu a.menu-item.active {
                 background: rgba(255, 255, 255, 0.15);
                 border-left-color: white;
+                color: white;
+                text-decoration: none;
             }
             
             .menu-icon {
@@ -151,6 +160,11 @@
                 height: 1px;
                 background: rgba(255, 255, 255, 0.1);
                 margin: 15px 0;
+            }
+            
+            .sidebar-menu a.menu-item:focus {
+                outline: none;
+                text-decoration: none;
             }
             
             .main-content {
@@ -226,7 +240,6 @@
                 color: var(--secondary-color);
             }
             
-            /* Conteúdo da Página */
             .page-content {
                 flex: 1;
                 padding: 30px;
@@ -311,7 +324,6 @@
                 text-decoration: none;
             }
             
-            /* Botão Sair */
             .btn-sair {
                 display: inline-flex;
                 align-items: center;
@@ -339,7 +351,6 @@
                 margin-right: 8px;
             }
             
-            /* Estilos específicos da página de listagem de turmas */
             .stats-container {
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -657,7 +668,6 @@
                 box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
             }
             
-            /* Custom scrollbar */
             .alunos-list::-webkit-scrollbar {
                 width: 6px;
             }
@@ -676,7 +686,6 @@
                 background: var(--primary-dark);
             }
             
-            /* Animações */
             @keyframes fadeInUp {
                 from {
                     opacity: 0;
@@ -692,7 +701,6 @@
                 animation: fadeInUp 0.6s ease-out;
             }
             
-            /* Efeito de brilho nos cards */
             .glow-card {
                 position: relative;
                 overflow: hidden;
@@ -713,7 +721,6 @@
                 left: 100%;
             }
             
-            /* Responsividade */
             @media (max-width: 992px) {
                 .sidebar {
                     width: 70px;
@@ -724,7 +731,7 @@
                     display: none;
                 }
                 
-                .menu-item {
+                .sidebar-menu a.menu-item {
                     justify-content: center;
                     padding: 15px;
                 }
@@ -746,7 +753,7 @@
                     display: block;
                 }
                 
-                .sidebar:hover .menu-item {
+                .sidebar:hover .sidebar-menu a.menu-item {
                     justify-content: flex-start;
                     padding: 15px 25px;
                 }
@@ -814,43 +821,45 @@
     </head>
     <body>
         <div class="app-container">
-            <!-- Menu Lateral -->
             <div class="sidebar">
                 <div class="sidebar-header">
                     <div class="logo">
                         <div class="logo-icon">
                             <i class="fas fa-graduation-cap"></i>
                         </div>
-                        <div class="logo-text">Gerenciamento de Aulas</div>
+                        <a href="../home_professor.jsp" class="logo-text">Gerenciamento de Aulas</a>
                     </div>
                 </div>
                 
                 <div class="sidebar-menu">
-                    <div class="menu-item">
+                    <a href="../home_professor.jsp" class="menu-item">
                         <div class="menu-icon">
                             <i class="fas fa-home"></i>
                         </div>
-                        <div class="menu-text" onclick="window.location.href='../home_professor.jsp'">Dashboard</div>
-                        
-                    </div>
+                        <div class="menu-text">Dashboard</div>
+                    </a>
                     
                     <div class="menu-divider"></div>
                     
-                    <div class="menu-item active">
+                    <a href="ClassList_prof.jsp" class="menu-item active">
                         <div class="menu-icon">
                             <i class="fas fa-users"></i>
                         </div>
-                        <div class="menu-text" onclick="window.location.href='ClassList_prof.jsp'" >Minhas Turmas</div>
-                    </div>
+                        <div class="menu-text">Minhas Turmas</div>
+                    </a>
                     
-                    <div class="menu-divider"></div>         
-                   
+                    <div class="menu-divider"></div>     
+                    
+                    <a href="../index.html" class="menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </div>
+                        <div class="menu-text">Sair do Sistema</div>
+                    </a>
                 </div>
             </div>
             
-            <!-- Conteúdo Principal -->
             <div class="main-content">
-                <!-- Header -->
                 <header class="header">
                     <div class="header-left">
                         <h1>Minhas Turmas</h1>
@@ -869,7 +878,6 @@
                     </div>
                 </header>
                 
-                <!-- Conteúdo da Página -->
                 <div class="page-content">
                     <div class="welcome-section fade-in-up">
                         <div class="welcome-icon">???</div>
@@ -911,7 +919,6 @@
                             </div>
                             <div class="stat-info">
                                 <%
-                                    // Contar disciplinas únicas
                                     java.util.Set<String> disciplinas = new java.util.HashSet<>();
                                     for (Turma t : turmas) {
                                         disciplinas.add(t.getNomeDisciplina());
@@ -1037,13 +1044,6 @@
                     <%
                         }
                     %>
-                    
-                    <div style="text-align: center; margin-top: 40px;">
-                        <a href="../index.html" class="btn-sair">
-                            <i class="fas fa-sign-out-alt"></i>
-                            Sair do Sistema
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1066,14 +1066,6 @@
                 const cards = document.querySelectorAll('.fade-in-up');
                 cards.forEach((card, index) => {
                     card.style.animationDelay = `${index * 0.1}s`;
-                });
-                
-                const menuItems = document.querySelectorAll('.menu-item');
-                menuItems.forEach(item => {
-                    item.addEventListener('click', function() {
-                        menuItems.forEach(i => i.classList.remove('active'));
-                        this.classList.add('active');
-                    });
                 });
             });
         </script>

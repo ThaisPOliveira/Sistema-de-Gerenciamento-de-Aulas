@@ -1,3 +1,10 @@
+<%-- 
+    Document   : ClassList_prof
+    Created on : 12 de nov. de 2025
+    Author     : Matheus e Thais
+--%>
+
+
 <%@page import="java.util.List"%>
 <%@page import="model.Class"%>
 <%@page import="model.DAO.ClassDAO"%>
@@ -48,6 +55,7 @@
             display: flex;
             min-height: 100vh;
         }
+     
         
         /* Sidebar/Menu Lateral */
         .sidebar {
@@ -91,29 +99,43 @@
         .logo-text {
             font-size: 20px;
             font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo-text:hover {
+            text-decoration: none;
+            color: white;
         }
         
         .sidebar-menu {
             padding: 20px 0;
         }
         
-        .menu-item {
-            padding: 15px 25px;
+        /* ESTILOS PARA LINKS DO MENU */
+        .sidebar-menu a.menu-item {
             display: flex;
             align-items: center;
+            padding: 15px 25px;
+            text-decoration: none;
+            color: white;
             transition: var(--transition);
             cursor: pointer;
             border-left: 4px solid transparent;
         }
         
-        .menu-item:hover {
+        .sidebar-menu a.menu-item:hover {
             background: rgba(255, 255, 255, 0.1);
             border-left-color: rgba(255, 255, 255, 0.5);
+            color: white;
+            text-decoration: none;
         }
         
-        .menu-item.active {
+        .sidebar-menu a.menu-item.active {
             background: rgba(255, 255, 255, 0.15);
             border-left-color: white;
+            color: white;
+            text-decoration: none;
         }
         
         .menu-icon {
@@ -132,6 +154,12 @@
             height: 1px;
             background: rgba(255, 255, 255, 0.1);
             margin: 15px 0;
+        }
+        
+        /* Remove qualquer estilo de link */
+        .sidebar-menu a.menu-item:focus {
+            outline: none;
+            text-decoration: none;
         }
         
         /* Conteúdo Principal */
@@ -496,7 +524,7 @@
                 display: none;
             }
             
-            .menu-item {
+            .sidebar-menu a.menu-item {
                 justify-content: center;
                 padding: 15px;
             }
@@ -518,7 +546,7 @@
                 display: block;
             }
             
-            .sidebar:hover .menu-item {
+            .sidebar:hover .sidebar-menu a.menu-item {
                 justify-content: flex-start;
                 padding: 15px 25px;
             }
@@ -592,41 +620,54 @@
                     <div class="logo-icon">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <div class="logo-text">Gerenciamento de Aulas</div>
+                    <a href="../home_admin.html" class="logo-text">Gerenciamento de Aulas</a>
                 </div>
             </div>
             
             <div class="sidebar-menu">
-                <div class="menu-item">
+                <!-- Dashboard -->
+                <a href="../home_admin.html" class="menu-item">
                     <div class="menu-icon">
                         <i class="fas fa-home"></i>
                     </div>
                     <div class="menu-text">Dashboard</div>
-                </div>
+                </a>
                 
                 <div class="menu-divider"></div>
                 
-                <div class="menu-item active">
+                <!-- Turmas -->
+                <a href="ClassList.jsp" class="menu-item active">
                     <div class="menu-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <div class="menu-text" onclick="window.location='class/ClassList.jsp'">Turmas</div>
-                </div>
-                <div class="menu-item">
+                    <div class="menu-text">Turmas</div>
+                </a>
+                
+                <!-- Disciplinas -->
+                <a href="../course/list_course.jsp" class="menu-item">
                     <div class="menu-icon">
                         <i class="fas fa-book"></i>
                     </div>
-                    <div class="menu-text" onclick="window.location='course/list_course.jsp'">Disciplinas</div>
-                </div>
+                    <div class="menu-text">Disciplinas</div>
+                </a>
                 
-                <div class="menu-item">
+                <!-- Professores -->
+                <a href="../professor/list_professor.jsp" class="menu-item">
                     <div class="menu-icon">
                         <i class="fas fa-chalkboard-teacher"></i>
                     </div>
-                    <div class="menu-text" onclick="window.location='professor/regist_professor.jsp'">Professores</div>
-                </div>
+                    <div class="menu-text">Professores</div>
+                </a>
                
                 <div class="menu-divider"></div>
+                
+                <!-- Sair -->
+                <a href="../index.html" class="menu-item">
+                    <div class="menu-icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                    <div class="menu-text">Sair do Sistema</div>
+                </a>
             </div>
         </div>
         
@@ -781,16 +822,7 @@
     </footer>
 
     <script>
-        // Menu interativo
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuItems = document.querySelectorAll('.menu-item');
-            menuItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    menuItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-        });
+    
     </script>
 </body>
 </html>

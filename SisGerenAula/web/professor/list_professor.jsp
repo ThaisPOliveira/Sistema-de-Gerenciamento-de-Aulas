@@ -1,3 +1,9 @@
+<%-- 
+    Document   : ClassList_prof
+    Created on : 12 de nov. de 2025
+    Author     : Matheus e Thais
+--%>
+
 <%@page import="model.Professor, java.util.List, model.DAO.ProfessorDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -39,15 +45,15 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden; /* Previne scroll horizontal no body */
         }
         
-        /* Layout Principal */
         .app-container {
             display: flex;
             min-height: 100vh;
+            width: 100%;
         }
         
-        /* Sidebar/Menu Lateral */
         .sidebar {
             width: var(--sidebar-width);
             background: linear-gradient(180deg, var(--primary-color) 0%, var(--primary-dark) 100%);
@@ -89,29 +95,42 @@
         .logo-text {
             font-size: 20px;
             font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo-text:hover {
+            text-decoration: none;
+            color: white;
         }
         
         .sidebar-menu {
             padding: 20px 0;
         }
         
-        .menu-item {
-            padding: 15px 25px;
+        .sidebar-menu a.menu-item {
             display: flex;
             align-items: center;
+            padding: 15px 25px;
+            text-decoration: none;
+            color: white;
             transition: var(--transition);
             cursor: pointer;
             border-left: 4px solid transparent;
         }
         
-        .menu-item:hover {
+        .sidebar-menu a.menu-item:hover {
             background: rgba(255, 255, 255, 0.1);
             border-left-color: rgba(255, 255, 255, 0.5);
+            color: white;
+            text-decoration: none;
         }
         
-        .menu-item.active {
+        .sidebar-menu a.menu-item.active {
             background: rgba(255, 255, 255, 0.15);
             border-left-color: white;
+            color: white;
+            text-decoration: none;
         }
         
         .menu-icon {
@@ -132,16 +151,21 @@
             margin: 15px 0;
         }
         
-        /* Conteúdo Principal */
+        .sidebar-menu a.menu-item:focus {
+            outline: none;
+            text-decoration: none;
+        }
+        
         .main-content {
             flex: 1;
             margin-left: var(--sidebar-width);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            width: calc(100% - var(--sidebar-width));
+            max-width: 100%;
         }
         
-        /* Header */
         .header {
             height: var(--header-height);
             background: white;
@@ -153,6 +177,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            width: 100%;
         }
         
         .header-left h1 {
@@ -207,11 +232,13 @@
             color: var(--secondary-color);
         }
         
-        /* Conteúdo da Página */
         .page-content {
             flex: 1;
             padding: 30px;
             background: #f5f7fb;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
         
         .list-container {
@@ -222,6 +249,9 @@
             margin-bottom: 30px;
             position: relative;
             overflow: hidden;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
         
         .list-container::before {
@@ -252,7 +282,6 @@
             font-size: 16px;
         }
         
-        /* Mensagens Simples */
         .mensagem {
             padding: 15px 20px;
             margin-bottom: 25px;
@@ -274,7 +303,6 @@
             border-left-color: var(--danger-color);
         }
         
-        /* Header Container */
         .header-container {
             display: flex;
             justify-content: space-between;
@@ -316,18 +344,20 @@
             color: white;
         }
         
-        /* Tabelas */
         .tabela-container {
             overflow-x: auto;
             border-radius: 12px;
             box-shadow: var(--shadow);
             margin: 25px 0;
+            width: 100%;
+            max-width: 100%;
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 0;
+            min-width: 1000px; /* Largura mínima para a tabela */
         }
         
         th {
@@ -337,17 +367,18 @@
             text-align: left;
             font-weight: 600;
             font-size: 14px;
+            white-space: nowrap;
         }
         
         td {
             padding: 16px 15px;
             border-bottom: 1px solid #e9ecef;
             vertical-align: middle;
+            white-space: nowrap;
         }
         
         tr:hover {
             background-color: #f8f9fa;
-            transform: scale(1.01);
             transition: var(--transition);
         }
         
@@ -404,7 +435,6 @@
             text-decoration: none;
         }
         
-        /* Estados */
         .vazio {
             color: var(--secondary-color);
             font-style: italic;
@@ -471,12 +501,12 @@
             color: white;
         }
         
-        /* Footer */
         .footer {
             background: white;
             padding: 20px 30px;
             border-top: 1px solid #eee;
             margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
         }
         
         .footer-content {
@@ -507,7 +537,36 @@
             text-decoration: none;
         }
         
-        /* Responsividade */
+        /* Scrollbar customizada para a tabela */
+        .tabela-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .tabela-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .tabela-container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        .tabela-container::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        @media (max-width: 1200px) {
+            table {
+                min-width: 900px;
+            }
+            
+            th, td {
+                padding: 14px 12px;
+                font-size: 13px;
+            }
+        }
+        
         @media (max-width: 992px) {
             .sidebar {
                 width: 70px;
@@ -518,7 +577,7 @@
                 display: none;
             }
             
-            .menu-item {
+            .sidebar-menu a.menu-item {
                 justify-content: center;
                 padding: 15px;
             }
@@ -529,6 +588,7 @@
             
             .main-content, .footer {
                 margin-left: 70px;
+                width: calc(100% - 70px);
             }
             
             .sidebar:hover {
@@ -540,13 +600,17 @@
                 display: block;
             }
             
-            .sidebar:hover .menu-item {
+            .sidebar:hover .sidebar-menu a.menu-item {
                 justify-content: flex-start;
                 padding: 15px 25px;
             }
             
             .sidebar:hover .menu-icon {
                 margin-right: 15px;
+            }
+            
+            table {
+                min-width: 800px;
             }
         }
         
@@ -579,7 +643,8 @@
             }
             
             table {
-                font-size: 14px;
+                min-width: 700px;
+                font-size: 12px;
             }
             
             th, td {
@@ -604,60 +669,74 @@
             
             .main-content, .footer {
                 margin-left: 0;
+                width: 100%;
+            }
+            
+            table {
+                min-width: 600px;
+            }
+            
+            .list-container {
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
                     <div class="logo-icon">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <div class="logo-text">Gerenciamento de Aulas</div>
+                    <a href="../home_admin.html" class="logo-text">Gerenciamento de Aulas</a>
                 </div>
             </div>
             
             <div class="sidebar-menu">
-                <div class="menu-item">
+                <a href="../home_admin.html" class="menu-item">
                     <div class="menu-icon">
                         <i class="fas fa-home"></i>
                     </div>
                     <div class="menu-text">Dashboard</div>
-                </div>
+                </a>
                 
                 <div class="menu-divider"></div>
                 
-                <div class="menu-item">
+                <a href="../class/ClassList.jsp" class="menu-item">
                     <div class="menu-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <div class="menu-text" onclick="window.location='class/ClassList.jsp'">Turmas</div>
-                </div>
-                <div class="menu-item">
+                    <div class="menu-text">Turmas</div>
+                </a>
+                
+                <a href="../course/list_course.jsp" class="menu-item">
                     <div class="menu-icon">
                         <i class="fas fa-book"></i>
                     </div>
-                    <div class="menu-text" onclick="window.location='course/list_course.jsp'">Disciplinas</div>
-                </div>
+                    <div class="menu-text">Disciplinas</div>
+                </a>
                 
-                <div class="menu-item active">
+                <a href="list_professor.jsp" class="menu-item active">
                     <div class="menu-icon">
                         <i class="fas fa-chalkboard-teacher"></i>
                     </div>
-                    <div class="menu-text" onclick="window.location='list_professor.jsp'">Professores</div>
-                </div>
+                    <div class="menu-text">Professores</div>
+                </a>
                
                 <div class="menu-divider"></div>
+                
+                <a href="../index.html" class="menu-item">
+                    <div class="menu-icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                    <div class="menu-text">Sair do Sistema</div>
+                </a>
             </div>
         </div>
         
-        <!-- Main Content -->
         <div class="main-content">
-            <!-- Header -->
             <header class="header">
                 <div class="header-left">
                     <h1>Lista de Professores</h1>
@@ -674,7 +753,6 @@
                 </div>
             </header>
             
-            <!-- Content -->
             <div class="page-content">
                 <div class="list-container">
                     <div class="list-header">
@@ -685,7 +763,6 @@
                         <p class="list-subtitle">Gerencie todos os professores do sistema</p>
                     </div>
 
-                    <!-- Mensagens Simples -->
                     <% if (request.getParameter("sucesso") != null) {%>
                         <div class="mensagem mensagem-sucesso">
                             ✅ <%= request.getParameter("sucesso")%>
@@ -699,14 +776,13 @@
                     <% } %>
 
                     <div class="header-container">
-                        <a href="professor/regist_professor.jsp" class="btn btn-primary">
+                        <a href="regist_professor.jsp" class="btn btn-primary">
                             <i class="fas fa-plus"></i>
                             Novo Professor
                         </a>
                     </div>
 
                     <%
-                        // CARREGAR LISTA DE PROFESSORES DIRETAMENTE NO JSP
                         List<Professor> professores = null;
                         try {
                             ProfessorDAO professorDAO = new ProfessorDAO();
@@ -806,7 +882,6 @@
         </div>
     </div>
     
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-text">
@@ -819,18 +894,5 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        // Menu interativo
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuItems = document.querySelectorAll('.menu-item');
-            menuItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    menuItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-        });
-    </script>
 </body>
 </html>

@@ -28,4 +28,21 @@ public class DisciplinaDAO {
 
         return disciplinas;
     }
+
+    public int countDisciplinas() {
+        String sql = "SELECT COUNT(*) FROM disciplina";
+
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            System.err.println("❌ Erro ao contar disciplinas: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 }

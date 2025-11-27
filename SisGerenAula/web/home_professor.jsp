@@ -75,6 +75,7 @@
             flex-direction: column;
         }
         
+        
         /* Layout Principal */
         .app-container {
             display: flex;
@@ -119,7 +120,16 @@
             align-items: center;
             justify-content: center;
         }
-        
+       
+            .menu-item a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            .menu-item a:hover {
+                color: inherit;
+                text-decoration: none;
+            }
         .logo-text {
             font-size: 20px;
             font-weight: 700;
@@ -702,7 +712,15 @@
                         <div class="menu-text" onclick="window.location.href='class/ClassList_prof.jsp'" >Minhas Turmas</div>
                     </div>
                     
-                    <div class="menu-divider"></div>         
+                    <div class="menu-divider"></div> 
+                     <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                    <div class="menu-text">
+                        <a href="index.html">Sair do Sistema</a>
+                    </div>
+                </div>
                    
                 </div>
         </div>
@@ -788,15 +806,7 @@
                     </div>
                     
                    
-                </div>
-                
-                <div style="text-align: center; margin-top: 40px;">
-                    <a href="index.html" class="btn-sair">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Sair do Sistema
-                    </a>
-                </div>
-            </div>
+               
         </div>
     </div>
     

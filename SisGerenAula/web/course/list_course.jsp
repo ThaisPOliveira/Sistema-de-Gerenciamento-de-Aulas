@@ -1,3 +1,12 @@
+<%-- 
+    Document   : ClassList_prof
+    Created on : 12 de nov. de 2025
+    Author     : Matheus e Thais
+--%>
+
+
+
+
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="model.DAO.CourseDAO, model.Course, java.util.List" %>
 <%
@@ -59,13 +68,11 @@
             flex-direction: column;
         }
         
-        /* Layout Principal */
         .app-container {
             display: flex;
             min-height: 100vh;
         }
         
-        /* Sidebar/Menu Lateral */
         .sidebar {
             width: var(--sidebar-width);
             background: linear-gradient(180deg, var(--primary-color) 0%, var(--primary-dark) 100%);
@@ -107,29 +114,42 @@
         .logo-text {
             font-size: 20px;
             font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo-text:hover {
+            text-decoration: none;
+            color: white;
         }
         
         .sidebar-menu {
             padding: 20px 0;
         }
         
-        .menu-item {
-            padding: 15px 25px;
+        .sidebar-menu a.menu-item {
             display: flex;
             align-items: center;
+            padding: 15px 25px;
+            text-decoration: none;
+            color: white;
             transition: var(--transition);
             cursor: pointer;
             border-left: 4px solid transparent;
         }
         
-        .menu-item:hover {
+        .sidebar-menu a.menu-item:hover {
             background: rgba(255, 255, 255, 0.1);
             border-left-color: rgba(255, 255, 255, 0.5);
+            color: white;
+            text-decoration: none;
         }
         
-        .menu-item.active {
+        .sidebar-menu a.menu-item.active {
             background: rgba(255, 255, 255, 0.15);
             border-left-color: white;
+            color: white;
+            text-decoration: none;
         }
         
         .menu-icon {
@@ -150,7 +170,11 @@
             margin: 15px 0;
         }
         
-        /* Conteúdo Principal */
+        .sidebar-menu a.menu-item:focus {
+            outline: none;
+            text-decoration: none;
+        }
+        
         .main-content {
             flex: 1;
             margin-left: var(--sidebar-width);
@@ -159,7 +183,6 @@
             min-height: 100vh;
         }
         
-        /* Header */
         .header {
             height: var(--header-height);
             background: white;
@@ -225,7 +248,6 @@
             color: var(--secondary-color);
         }
         
-        /* Conteúdo da Página */
         .page-content {
             flex: 1;
             padding: 30px;
@@ -270,7 +292,6 @@
             font-size: 16px;
         }
         
-        /* Mensagens Simples */
         .mensagem {
             padding: 15px 20px;
             margin-bottom: 25px;
@@ -292,7 +313,6 @@
             border-left-color: var(--danger-color);
         }
         
-        /* Header Container */
         .header-container {
             display: flex;
             justify-content: space-between;
@@ -302,7 +322,6 @@
             gap: 15px;
         }
         
-        /* Filtros */
         .filtros {
             display: flex;
             gap: 15px;
@@ -355,7 +374,6 @@
             color: white;
         }
         
-        /* Tabelas */
         .tabela-container {
             overflow-x: auto;
             border-radius: 12px;
@@ -443,7 +461,6 @@
             text-decoration: none;
         }
         
-        /* Badges */
         .badge {
             display: inline-block;
             padding: 6px 12px;
@@ -467,7 +484,6 @@
             color: #004085;
         }
         
-        /* Estados Vazios */
         .vazio {
             color: var(--secondary-color);
             font-style: italic;
@@ -509,7 +525,6 @@
             color: white;
         }
         
-        /* Link documento */
         .link-documento {
             color: var(--primary-color);
             text-decoration: none;
@@ -525,7 +540,6 @@
             text-decoration: underline;
         }
         
-        /* Footer */
         .footer {
             background: white;
             padding: 20px 30px;
@@ -561,7 +575,6 @@
             text-decoration: none;
         }
         
-        /* Responsividade */
         @media (max-width: 992px) {
             .sidebar {
                 width: 70px;
@@ -572,7 +585,7 @@
                 display: none;
             }
             
-            .menu-item {
+            .sidebar-menu a.menu-item {
                 justify-content: center;
                 padding: 15px;
             }
@@ -594,7 +607,7 @@
                 display: block;
             }
             
-            .sidebar:hover .menu-item {
+            .sidebar:hover .sidebar-menu a.menu-item {
                 justify-content: flex-start;
                 padding: 15px 25px;
             }
@@ -668,54 +681,59 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
                     <div class="logo-icon">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <div class="logo-text">Gerenciamento de Aulas</div>
+                    <a href="../home_admin.html" class="logo-text">Gerenciamento de Aulas</a>
                 </div>
             </div>
             
             <div class="sidebar-menu">
-                <div class="menu-item">
+                <a href="../home_admin.html" class="menu-item">
                     <div class="menu-icon">
                         <i class="fas fa-home"></i>
                     </div>
                     <div class="menu-text">Dashboard</div>
-                </div>
+                </a>
                 
                 <div class="menu-divider"></div>
                 
-                <div class="menu-item">
+                <a href="../class/ClassList.jsp" class="menu-item">
                     <div class="menu-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <div class="menu-text" onclick="window.location='class/ClassList.jsp'">Turmas</div>
-                </div>
-                <div class="menu-item active">
+                    <div class="menu-text">Turmas</div>
+                </a>
+                
+                <a href="list_course.jsp" class="menu-item active">
                     <div class="menu-icon">
                         <i class="fas fa-book"></i>
                     </div>
-                    <div class="menu-text" onclick="window.location='course/list_course.jsp'">Disciplinas</div>
-                </div>
+                    <div class="menu-text">Disciplinas</div>
+                </a>
                 
-                <div class="menu-item">
+                <a href="../professor/list_professor.jsp" class="menu-item">
                     <div class="menu-icon">
                         <i class="fas fa-chalkboard-teacher"></i>
                     </div>
-                    <div class="menu-text" onclick="window.location='professor/regist_professor.jsp'">Professores</div>
-                </div>
+                    <div class="menu-text">Professores</div>
+                </a>
                
                 <div class="menu-divider"></div>
+                
+                <a href="../index.html" class="menu-item">
+                    <div class="menu-icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                    <div class="menu-text">Sair do Sistema</div>
+                </a>
             </div>
         </div>
         
-        <!-- Main Content -->
         <div class="main-content">
-            <!-- Header -->
             <header class="header">
                 <div class="header-left">
                     <h1>Lista de Disciplinas</h1>
@@ -732,7 +750,6 @@
                 </div>
             </header>
             
-            <!-- Content -->
             <div class="page-content">
                 <div class="list-container">
                     <div class="list-header">
@@ -743,7 +760,6 @@
                         <p class="list-subtitle">Gerencie todas as disciplinas do sistema</p>
                     </div>
 
-                    <!-- Mensagens Simples -->
                     <% if (sucesso != null) { %>
                         <div class="mensagem mensagem-sucesso">
                             ✅ <%= sucesso %>
@@ -862,7 +878,6 @@
         </div>
     </div>
     
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-text">
@@ -877,16 +892,7 @@
     </footer>
 
     <script>
-        // Menu interativo
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuItems = document.querySelectorAll('.menu-item');
-            menuItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    menuItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-        });
+
     </script>
 </body>
 </html>
