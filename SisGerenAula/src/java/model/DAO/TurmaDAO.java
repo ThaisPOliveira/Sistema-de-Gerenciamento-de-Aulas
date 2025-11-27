@@ -13,7 +13,7 @@ public class TurmaDAO {
 
         // Busca o nome do professor
         String nomeProfessor = buscarNomeProfessorPorId(idProfessor);
-        
+
         if (nomeProfessor == null) {
             System.out.println("❌ Professor não encontrado: ID " + idProfessor);
             return turmas;
@@ -21,13 +21,12 @@ public class TurmaDAO {
 
         System.out.println("🔍 Buscando turmas para: " + nomeProfessor);
 
-        String sql = "SELECT t.id_turma, t.nome_turma, t.nome_professor, t.nome_aluno, t.horario, d.nome AS disciplina_nome " +
-                   "FROM turma t " +
-                   "JOIN disciplina d ON t.id_disciplina = d.id " +
-                   "WHERE t.nome_professor = ?";
+        String sql = "SELECT t.id_turma, t.nome_turma, t.nome_professor, t.nome_aluno, t.horario, d.nome AS disciplina_nome "
+                + "FROM turma t "
+                + "JOIN disciplina d ON t.id_disciplina = d.id "
+                + "WHERE t.nome_professor = ?";
 
-        try (Connection conn = ConectaDB.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, nomeProfessor);
 
@@ -39,7 +38,7 @@ public class TurmaDAO {
                     turma.setNomeProfessor(rs.getString("nome_professor"));
                     turma.setHorario(rs.getString("horario"));
                     turma.setNomeDisciplina(rs.getString("disciplina_nome"));
-                    
+
                     // Processa os alunos
                     String dadosAlunos = rs.getString("nome_aluno");
                     turma.setAlunos(processarAlunos(dadosAlunos, conn));
@@ -56,15 +55,32 @@ public class TurmaDAO {
         return turmas;
     }
 
+    public int countTurmas() {
+        String sql = "SELECT COUNT(*) FROM turma";
+
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            System.err.println("❌ Erro ao contar turmas: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
     private List<Aluno> processarAlunos(String dadosAlunos, Connection conn) {
         List<Aluno> alunos = new ArrayList<>();
-        
+
         if (dadosAlunos == null || dadosAlunos.trim().isEmpty()) {
             return alunos;
         }
-        
+
         System.out.println("🔍 Processando alunos: " + dadosAlunos);
-        
+
         // Se são IDs, busca no banco
         if (dadosAlunos.matches("^[0-9,]+$")) {
             String[] idsArray = dadosAlunos.split(",");
@@ -84,15 +100,14 @@ public class TurmaDAO {
                 }
             }
         }
-        
+
         return alunos;
     }
 
     private String buscarNomeProfessorPorId(int idProfessor) {
         String sql = "SELECT nome FROM professor WHERE id_professor = ?";
-        
-        try (Connection conn = ConectaDB.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idProfessor);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -104,26 +119,26 @@ public class TurmaDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return null;
     }
 
     private String buscarNomeAlunoPorId(int idAluno, Connection conn) {
         String sql = "SELECT nome FROM alunos WHERE id = ?";
-        
+
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idAluno);
-            
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return rs.getString("nome");
                 }
             }
-            
+
         } catch (SQLException e) {
             System.err.println("❌ Erro ao buscar aluno ID " + idAluno);
         }
-        
+
         return null;
     }
 }

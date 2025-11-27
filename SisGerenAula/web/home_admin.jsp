@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<!-- 
-    Author     : Matheus Gabriel 
-                 Thais Oliveira 
-    UNIVERSIDADE MOGI DAS CRUZES 
--->
+<%@ page import="model.DAO.AlunoDAO" %>
+<%@ page import="model.DAO.TurmaDAO" %>
+<%@ page import="model.DAO.DisciplinaDAO" %>
+<%@ page import="model.DAO.ProfessorDAO" %>
+
+<%
+    TurmaDAO turmaDAO = new TurmaDAO();
+    DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+    ProfessorDAO professorDAO = new ProfessorDAO();
+    AlunoDAO alunoDAO = new AlunoDAO();
+%>
 <html lang="pt-BR">
     <head>
         <meta charset="UTF-8">
@@ -26,7 +32,7 @@
 
                 <div class="sidebar-menu">
                     <!-- Dashboard -->
-                    <a href="home_admin.html" class="menu-item active">
+                    <a href="home_admin.jsp" class="menu-item active">
                         <div class="menu-icon">
                             <i class="fas fa-home"></i>
                         </div>
@@ -70,7 +76,6 @@
                     </a>
                 </div>
             </div>
-                        
 
             <div class="main-content">
                 <header class="header">
@@ -83,61 +88,67 @@
                             <div class="user-avatar">AD</div>
                             <div class="user-info">
                                 <div class="user-name">Administrador</div>
-                                <div class="user-role">Super UsuÃ¡rio</div>
+                                <div class="user-role">Super Usuário</div>
                             </div>
                         </div>
                     </div>
                 </header>
 
                 <div class="page-content">
-                    <!-- SeÃ§Ã£o de Boas-vindas -->
+                    <!-- Seção de Boas-vindas -->
                     <div class="welcome-section fade-in-up">
                         <h2 class="welcome-title">Bem-vindo ao Sistema de Gerenciamento</h2>
                         <p class="welcome-subtitle">Gerencie turmas, disciplinas e professores de forma eficiente e intuitiva</p>
                     </div>
 
+                    <!-- Stats Container CORRETO -->
                     <div class="stats-container">
+                        <!-- Card Turmas -->
                         <div class="stat-card turmas glow-card fade-in-up">
                             <div class="stat-icon">
                                 <i class="fas fa-users"></i>
                             </div>
                             <div class="stat-info">
-                                <div class="stat-number" id="countTurmas">0</div>
+                                <div class="stat-number" id="countTurmas"><%= turmaDAO.countTurmas()%></div>
                                 <div class="stat-label">Turmas Ativas</div>
                             </div>
                         </div>
 
+                        <!-- Card Disciplinas -->
                         <div class="stat-card disciplinas glow-card fade-in-up">
                             <div class="stat-icon">
                                 <i class="fas fa-book"></i>
                             </div>
                             <div class="stat-info">
-                                <div class="stat-number" id="countDisciplinas">0</div>
+                                <div class="stat-number" id="countDisciplinas"><%= disciplinaDAO.countDisciplinas()%></div>
                                 <div class="stat-label">Disciplinas</div>
                             </div>
                         </div>
 
+                        <!-- Card Professores -->
                         <div class="stat-card professores glow-card fade-in-up">
                             <div class="stat-icon">
                                 <i class="fas fa-chalkboard-teacher"></i>
                             </div>
                             <div class="stat-info">
-                                <div class="stat-number" id="countProfessores">0</div>
+                                <div class="stat-number" id="countProfessores"><%= professorDAO.countProfessores()%></div>
                                 <div class="stat-label">Professores</div>
                             </div>
                         </div>
 
+                        <!-- Card Alunos -->
                         <div class="stat-card alunos glow-card fade-in-up">
                             <div class="stat-icon">
                                 <i class="fas fa-user-graduate"></i>
                             </div>
                             <div class="stat-info">
-                                <div class="stat-number" id="countAlunos">0</div>
+                                <div class="stat-number" id="countAlunos"><%= alunoDAO.countAlunos()%></div>
                                 <div class="stat-label">Alunos</div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Actions Container -->
                     <div class="actions-container">
                         <div class="action-section turmas-section glow-card fade-in-up">
                             <div class="section-header">
@@ -209,7 +220,7 @@
                     &copy; 2025 Sistema de Gerenciamento de Aulas. Todos os direitos reservados.
                 </div>
                 <div class="footer-links">
-                    <a href="#" class="footer-link">PolÃ­tica de Privacidade</a>
+                    <a href="#" class="footer-link">Política de Privacidade</a>
                     <a href="#" class="footer-link">Termos de Uso</a>
                     <a href="#" class="footer-link">Suporte</a>
                 </div>
@@ -218,7 +229,7 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                // AnimaÃ§Ãµes dos cards
+                // Animações dos cards
                 const cards = document.querySelectorAll('.fade-in-up');
                 cards.forEach((card, index) => {
                     card.style.animationDelay = `${index * 0.1}s`;
@@ -238,34 +249,28 @@
             });
 
             function carregarContadores() {
-                // Simulando a busca dos dados (substitua por chamadas reais ao backend)
+                // Pega os valores reais que já vieram do JSP
+                const countTurmas = parseInt(document.getElementById('countTurmas').textContent);
+                const countDisciplinas = parseInt(document.getElementById('countDisciplinas').textContent);
+                const countProfessores = parseInt(document.getElementById('countProfessores').textContent);
+                const countAlunos = parseInt(document.getElementById('countAlunos').textContent);
+
+                // Reseta para 0 para poder animar
+                document.getElementById('countTurmas').textContent = '0';
+                document.getElementById('countDisciplinas').textContent = '0';
+                document.getElementById('countProfessores').textContent = '0';
+                document.getElementById('countAlunos').textContent = '0';
+
+                // Anima os contadores
                 setTimeout(() => {
-                    // Aqui vocÃª faria chamadas fetch para seus endpoints
-                    // Por enquanto vou simular com nÃºmeros aleatÃ³rios
-
-                    document.getElementById('countTurmas').textContent = '12';
-                    document.getElementById('countDisciplinas').textContent = '8';
-                    document.getElementById('countProfessores').textContent = '15';
-                    document.getElementById('countAlunos').textContent = '120';
-
-                    // Para usar com endpoints reais, descomente o cÃ³digo abaixo:
-                    /*
-                     fetch('/api/contadores')
-                     .then(response => response.json())
-                     .then(data => {
-                     document.getElementById('countTurmas').textContent = data.turmas;
-                     document.getElementById('countDisciplinas').textContent = data.disciplinas;
-                     document.getElementById('countProfessores').textContent = data.professores;
-                     document.getElementById('countAlunos').textContent = data.alunos;
-                     })
-                     .catch(error => {
-                     console.error('Erro ao carregar contadores:', error);
-                     });
-                     */
-                }, 1000);
+                    animarContador(document.getElementById('countTurmas'), countTurmas);
+                    animarContador(document.getElementById('countDisciplinas'), countDisciplinas);
+                    animarContador(document.getElementById('countProfessores'), countProfessores);
+                    animarContador(document.getElementById('countAlunos'), countAlunos);
+                }, 500);
             }
 
-            // FunÃ§Ã£o para animar os nÃºmeros (contador animado)
+            // Função para animar os números (contador animado)
             function animarContador(element, valorFinal, duracao = 2000) {
                 let valorInicial = 0;
                 const incremento = valorFinal / (duracao / 16);

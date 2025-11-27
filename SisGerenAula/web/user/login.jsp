@@ -37,7 +37,7 @@
                     if ("admin".equalsIgnoreCase(user.getTipo())) {
         %>
         <script>
-            window.location.href = "../home_admin.html";
+            window.location.href = "../home_admin.jsp";
         </script>
         <%
         } else {

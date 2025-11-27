@@ -41,7 +41,7 @@ public class AlunoDAO {
     }
 
     public int countAlunos() {
-        String sql = "SELECT COUNT(*) FROM aluno";
+        String sql = "SELECT COUNT(*) FROM alunos";
 
         try (Connection conn = ConectaDB.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 

@@ -687,7 +687,7 @@
                     <div class="logo-icon">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <a href="../home_admin.html" class="logo-text">Gerenciamento de Aulas</a>
+                    <a href="../home_admin.jsp" class="logo-text">Gerenciamento de Aulas</a>
                 </div>
             </div>
             
