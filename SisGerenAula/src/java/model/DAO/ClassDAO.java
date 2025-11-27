@@ -216,7 +216,7 @@ public class ClassDAO {
             return "Erro ao carregar alunos";
         }
 
-        return nomes.length() > 0 ? nomes.toString() : "Nenhum aluno encontrado";
+        return nomes.length() > 0 ? nomes.toString() : "Nenhum aluno necontrado";
     }
 
     private String converterIdsParaString(List<Integer> idsAlunos) {
