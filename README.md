@@ -43,11 +43,4 @@ Os arquivos JAR necessários estão compactados em um arquivo ZIP. Siga os passo
    - No Eclipse: `Build Path` → `Configure Build Path` → `Libraries` → `Add JARs`
    - No NetBeans: `Properties` → `Libraries` → `Add JAR/Folder`
 
-## 🚀 Como Executar o Projeto
 
-### 1. Configuração do Banco de Dados
-```sql
--- Crie o banco de dados
-CREATE DATABASE gerenciamento_escolar;
-
--- Execute o script SQL fornecido na pasta /database
