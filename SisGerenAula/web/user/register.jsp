@@ -16,7 +16,7 @@
         user.setEmail(request.getParameter("email"));
         user.setSenha(request.getParameter("senha"));
 
-        // Validação básica
+       
         if (user.getNome() == null || user.getEmail() == null || user.getSenha() == null || 
             user.getNome().trim().isEmpty() || user.getEmail().trim().isEmpty() || user.getSenha().trim().isEmpty()) {
 %>
