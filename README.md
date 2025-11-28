@@ -21,6 +21,9 @@ Sistema completo de gestão escolar que permite:
   - jQuery 3.6.0
   - Select2 4.1.0
   - Font Awesome 6.4.0
+ 
+  <img width="1230" height="593" alt="image" src="https://github.com/user-attachments/assets/fe0ca643-45c4-4b93-a2ea-261e5e693e8c" />
+
 
 ## 📦 Pré-requisitos
 
@@ -30,6 +33,9 @@ Antes de executar o projeto, certifique-se de ter instalado:
 - Apache Tomcat 9 ou superior
 - MySQL Server 5.7 ou superior
 - IDE (Eclipse, NetBeans ou IntelliJ)
+
+  <img width="1092" height="589" alt="image" src="https://github.com/user-attachments/assets/739b79cc-95c7-47a9-bb20-46bdcf009f7b" />
+
 
 ## ⚠️ Importante: Bibliotecas Necessárias
 
